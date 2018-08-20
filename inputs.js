@@ -14,6 +14,7 @@ onkeydown = onkeypress = function(e){
   switch(e.keyCode){
     case 32:
       keys.attack = true;
+      break;
     case 37:
       keys.left = true;
       break;
@@ -30,7 +31,8 @@ onkeydown = onkeypress = function(e){
 onkeyup = function(e){
   switch(e.keyCode){
     case 32:
-      keys.attack = true;
+      keys.attack = false;
+      break;
     case 37:
       keys.left = false;
       break;

@@ -17,47 +17,29 @@ tiles = {
     solid: 0
   },
   
-  // 1: wall "unportalable"
+  // 1: ground_tile1
   "1": {
-    sprite: wall_unportalable_sprite,
+    sprite: ground_tile1,
     solid: 1
   },
   
-  // 2: slope 45deg right
+  // 2: ground_tile2
   "2": {
-    sprite: slope_45deg_right,
-    solid: 2,
-    solidity: function(x,y){
-      return y > tile_w - x;
-    }
+    sprite: ground_tile2,
+    solid: 1,
   },
   
-  // 3: slope 45deg left
+  // 3: ground_tile3
   "3": {
-    sprite: slope_45deg_left,
-    solid: 2,
-    solidity: function(x,y){
-      return y > x;
-    }
+    sprite: ground_tile3,
+    solid: 1,
   },
   
-  // 4: slope 45deg right
+  // 4: ceiling_tile
   "4": {
-    sprite: slope_minus_45deg_right,
-    solid: 2,
-    solidity: function(x,y){
-      return y < x;
-    }
+    sprite: ceiling_tile,
+    solid: 1,
   },
-  
-  // 5: slope 45deg right
-  "5": {
-    sprite: slope_minus_45deg_left,
-    solid: 2,
-    solidity: function(x,y){
-      return y < tile_w - x;
-    }
-  }
 };
 
 
@@ -86,9 +68,4 @@ is_solid = function(x,y){
   if(tiles[maps[current_map][tile_y][tile_x]].solid === 1){
     return true;
   }
-  
-  // Finally, return the solidity of the current pixel if the tile is semi-solid
-  var pixel_x = x - tile_x * tile_w;
-  var pixel_y = y - tile_y * tile_h;
-  return tiles[maps[current_map][tile_y][tile_x]].solidity(pixel_x, pixel_y);
 }
