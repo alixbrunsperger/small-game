@@ -117,7 +117,7 @@ var rotate_ennemies = function(enemy, angle_deg){
 var move_ennemies = function(enemy){
 
     // Walk left:
-    if(enemy.x > hero.x){
+    if(enemy.x > hero.x && false){
         console.log('enemy walk left');
         // Apply a negative walk acceleration to the ennemy's speed
         enemy.walk_speed -= enemy.walk_acceleration;
@@ -129,7 +129,7 @@ var move_ennemies = function(enemy){
     }
 
     // Walk right:
-    else if(enemy.x < hero.x){
+    else if(enemy.x < hero.x && false){
         console.log('enemy walk right');
         // Apply a negative walk acceleration to the enemy's speed
         enemy.walk_speed += enemy.walk_acceleration;
@@ -356,19 +356,19 @@ create_enemy = (enemy_x, enemy_y, type) => {
         walk_acceleration: 0.2,
         walk_idle_deceleration: -1,
         jump_speed: -14,
-        gravity: 1,
+        gravity: 0,
         // Variable
         walk_speed: 0,
         fall_speed: 0,
         max_fall_speed: 6,
         // State
-        freefall: true //type !== 'flying' // freefall
+        freefall: type !== 'flying' // freefall
     };
 }
 
 enemies = [];
 enemies[0] = [];
-enemies[1] = [create_enemy(200,-200,'flying')];
+enemies[1] = [create_enemy(200,200,'flying')];
 //enemies[1] = [create_enemy(200,-200,'flying'), create_enemy(100,-250,'flying'), create_enemy(150,-150,'flying'), create_enemy(50,-300,'flying')];
 enemies[2] = [];
 enemies[3] = [];

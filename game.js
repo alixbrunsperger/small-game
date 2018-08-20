@@ -47,6 +47,8 @@ game = function(){
         :
         ctx.drawImage(dagger_sprite, 5, -6, 16, 16);
 
+
+
     enemies[current_map].forEach((mob) => {
         rotate_ennemies(mob, 0);
         total_frames % 10 ===0 && switchEnemySprite(mob);
@@ -54,11 +56,12 @@ game = function(){
         move_ennemies(mob);
         console.log('moved', mob.x, mob.y);
         ctx.drawImage(mob.current_sprite, mob.x, mob.y, 32, 32);
+        l3.value = mob.x + ' ' + mob.y + ' ' + current_map;
     });
 
-    ctx.restore();
+    //l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
 
-    l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
+    ctx.restore();
 
     // Debug
     /*for(var i in vectors){
