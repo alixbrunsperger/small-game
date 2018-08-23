@@ -28,6 +28,12 @@ game = function(){
     // Draw the scene
     canvas.width = canvas.width;
 
+    /*
+    for map 0
+    ctx.font = "30px Arial";
+ctx.fillText("Hello World",10,50);
+     */
+
     ctx.fillStyle = "black";
     for(i in maps[current_map]){
         for(j in maps[current_map][i]){
@@ -39,6 +45,13 @@ game = function(){
 
     // Draw the hero
     ctx.save();
+
+    ctx.fillStyle = "red";
+    ctx.fillRect(hero.x -20, hero.y -25, hero.hp*8, 5);
+    ctx.fillStyle = "green";
+    ctx.fillRect(hero.x -20, hero.y -25 ,40,5);
+
+    //ctx.restore();
     ctx.translate(hero.x, hero.y);
     ctx.drawImage(hero_sprite, -16, -16, tile_w, tile_h);
 
@@ -47,21 +60,22 @@ game = function(){
         :
         ctx.drawImage(dagger_sprite, 5, -6, 16, 16);
 
-
-
     enemies[current_map].forEach((mob) => {
         rotate_ennemies(mob, 0);
         total_frames % 10 ===0 && switchEnemySprite(mob);
-        console.log(mob.x, mob.y);
         move_ennemies(mob);
-        console.log('moved', mob.x, mob.y);
-        ctx.drawImage(mob.current_sprite, mob.x, mob.y, 32, 32);
+        ctx.restore();
+        ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, 32, 32);
+        ctx.fillStyle = "red";
+        ctx.fillRect(mob.x -20, mob.y -25, mob.hp*40, 5);
+        ctx.fillStyle = "green";
+        ctx.fillRect(mob.x -20, mob.y -25 ,40,5);
         l3.value = mob.x + ' ' + mob.y + ' ' + current_map;
     });
 
-    //l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
-
     ctx.restore();
+
+    //l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
 
     // Debug
     /*for(var i in vectors){
@@ -74,7 +88,7 @@ game = function(){
       ctx.fillRect(hero.x + hero.L4[0] + j * hero.right[0], hero.y + hero.L4[1] + j * hero.right[1],2,2);
     }*/
 
-    // Debug
+    // Debug enemies
     enemies[current_map].forEach((mob) => {
         for(var i in vectors){
             ctx.fillStyle = "red";

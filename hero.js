@@ -74,7 +74,7 @@ base_vectors = {
     "bottom": ubottom
 }
 
-// The names of the immportant vectors to rotate using the base vectors, and their const equivalent
+// The names of the important vectors to rotate using the base vectors, and their const equivalent
 vectors = {
     "L1": uL1,
     "C1": uC1,
@@ -127,6 +127,8 @@ var hero = {
     walk_speed: 0,
     fall_speed: 0,
     max_fall_speed: 6,
+    hp: 5,
+    current_hp: 5,
 
     // State
     freefall: true // freefall

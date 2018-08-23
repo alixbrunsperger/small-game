@@ -1,13 +1,13 @@
 /* Hero */
 
 /*
-* The enemy is drawn as a 32 x 32 sprite, its hitbox is 22 x 28.
-* Its center point is at the center of its hitbox (x = 11; y = 14)
+* The enemy is drawn as a 32 x 32 sprite, its hitbox is 32 x 32.
+* Its center point is at the center of its hitbox (x = 16; y = 116)
 * A few other points are placed around the hitbox to simplify the collision tests:
-* L1, C1, R1 (x = 0 / 11 / 21; y = 0)
-* L2, C2, R2 (x = 0 / 11 / 21; y = 14)
-* L3, R3 (x = 0 / 21; y = 20)
-* L4, L5, C3, R5, R4 (x = 0 / 4 / 11 / 16 / 21; y = 24)
+* L1, C1, R1 (x = 0 / 16 / 32; y = 0)
+* L2, C2, R2 (x = 0 / 16 / 32; y = 16)
+* L3, R3 (x = 0 / 24; y = 24)
+* L4, L5, C3, R5, R4 (x = 0 / 8 / 16 / 24 / 32; y = 32)
 * 
 *               C1
 * L1 *-----------*-----------* R1
@@ -43,8 +43,8 @@
 */
 
 // Constants
-var enemy_w = 22;
-var enemy_h = 28;
+var enemy_w = 32;
+var enemy_h = 32;
 
 // Base vectors (Right and Bottom vectors of length 1)
 // These two vectors get rotated according to the enemy's angle
@@ -54,18 +54,18 @@ var ubottom = [0,1];
 
 // Working vectors
 // These vectors are not used as-is but rotated according to the enemy's angle and stored in the enemy's properties
-var uL1 = [-11, -14];
-var uC1 = [0, -14];
-var uR1 = [11, -14];
-var uL2 = [-11, 0];
-var uR2 = [11, 0];
-var uL3 = [-11, 8];
-var uC3 = [0, 14];
-var uR3 = [11, 8];
-var uL4 = [-11, 14];
-var uR4 = [11, 14];
-var uL5 = [-7, 14];
-var uR5 = [7, 14];
+var uL1 = [-16, -16];
+var uC1 = [0, -16];
+var uR1 = [16, -16];
+var uL2 = [-16, 0];
+var uR2 = [16, 0];
+var uL3 = [-16, 8];
+var uC3 = [0, 16];
+var uR3 = [16, 8];
+var uL4 = [-16, 16];
+var uR4 = [16, 16];
+var uL5 = [-8, 16];
+var uR5 = [8, 16];
 
 
 // The names of the base vectors to rotate using maths, and their const equivalent
@@ -117,7 +117,7 @@ var rotate_ennemies = function(enemy, angle_deg){
 var move_ennemies = function(enemy){
 
     // Walk left:
-    if(enemy.x > hero.x && false){
+    if(enemy.x > hero.x){
         console.log('enemy walk left');
         // Apply a negative walk acceleration to the ennemy's speed
         enemy.walk_speed -= enemy.walk_acceleration;
@@ -129,7 +129,7 @@ var move_ennemies = function(enemy){
     }
 
     // Walk right:
-    else if(enemy.x < hero.x && false){
+    else if(enemy.x < hero.x){
         console.log('enemy walk right');
         // Apply a negative walk acceleration to the enemy's speed
         enemy.walk_speed += enemy.walk_acceleration;
@@ -252,7 +252,7 @@ var move_ennemies = function(enemy){
 
 
     // Jump:
-    if(keys.up && !enemy.freefall){
+    if(keys.up && !enemy.freefall && false){
         enemy.freefall = true;
         enemy.fall_speed += enemy.jump_speed;
     }
@@ -311,20 +311,31 @@ switchEnemySprite = (mob) => {
 create_enemy = (enemy_x, enemy_y, type) => {
     let sprite = '';
     let alternate_sprite = '';
+    let hp = 0;
+    let gravity = 1;
+    let max_walk_speed = 2;
     switch(type){
         case 'basic':
+            sprite = monster;
+            alternate_sprite = monster2;
+            hp=1;
+            max_walk_speed = 1;
             break
         case 'flying':
             sprite = bat;
             alternate_sprite = bat2;
+            hp=1;
+            gravity: 0;
             break
         case 'tank':
             sprite = tank;
             alternate_sprite = tank;
+            hp=3;
             break
         case 'boss':
             sprite = boss;
             alternate_sprite = boss;
+            hp=10;
             break
     }
     return {
@@ -352,15 +363,17 @@ create_enemy = (enemy_x, enemy_y, type) => {
         R5: [],
         // Speeds and accelerations:
         // Constant
-        max_walk_speed: 2,
+        max_walk_speed: max_walk_speed,
         walk_acceleration: 0.2,
         walk_idle_deceleration: -1,
         jump_speed: -14,
-        gravity: 0,
+        gravity: gravity,
         // Variable
         walk_speed: 0,
         fall_speed: 0,
         max_fall_speed: 6,
+        hp: hp,
+        current_hp: hp,
         // State
         freefall: type !== 'flying' // freefall
     };
@@ -368,7 +381,7 @@ create_enemy = (enemy_x, enemy_y, type) => {
 
 enemies = [];
 enemies[0] = [];
-enemies[1] = [create_enemy(200,200,'flying')];
+enemies[1] = [create_enemy(650,401,'basic')];
 //enemies[1] = [create_enemy(200,-200,'flying'), create_enemy(100,-250,'flying'), create_enemy(150,-150,'flying'), create_enemy(50,-300,'flying')];
 enemies[2] = [];
 enemies[3] = [];
