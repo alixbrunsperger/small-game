@@ -118,7 +118,6 @@ var move_ennemies = function(enemy){
 
     // Walk left:
     if(enemy.x > hero.x){
-        console.log('enemy walk left');
         // Apply a negative walk acceleration to the ennemy's speed
         enemy.walk_speed -= enemy.walk_acceleration;
 
@@ -130,7 +129,6 @@ var move_ennemies = function(enemy){
 
     // Walk right:
     else if(enemy.x < hero.x){
-        console.log('enemy walk right');
         // Apply a negative walk acceleration to the enemy's speed
         enemy.walk_speed += enemy.walk_acceleration;
 
@@ -143,7 +141,6 @@ var move_ennemies = function(enemy){
     // Idle:
 
     else{
-        console.log('enemy idle');
         if(Math.abs(enemy.walk_speed) < 1){
             enemy.walk_speed = 0;
         }
@@ -162,7 +159,6 @@ var move_ennemies = function(enemy){
 
     // Move horizontally
     for(var i = 0; i < Math.abs(enemy.walk_speed) * frametime_coef; i++){
-        console.log('move h', enemy.x, enemy.y, enemy.walk_speed, enemy.right[0], enemy.right[1]);
         enemy.x += enemy.right[0] * Math.sign(enemy.walk_speed);
         enemy.y += enemy.right[1] * Math.sign(enemy.walk_speed);
 
@@ -308,6 +304,40 @@ switchEnemySprite = (mob) => {
     mob.current_sprite = mob.current_sprite === mob.sprite ? mob.alternate_sprite : mob.sprite;
 }
 
+touch_enemy = function(mob){
+    let hero_points = {
+        r1:{ x: hero.x + hero.R1[0], y: hero.y + hero.R1[1]},
+        r4:{ x: hero.x + hero.R4[0], y: hero.y + hero.R4[1]},
+        l1:{ x: hero.x + hero.L1[0], y: hero.y + hero.L1[1]},
+        l4:{ x: hero.x + hero.L4[0], y: hero.y + hero.L4[1]}
+    };
+    let mob_points = {
+        r1:{ x: mob.x + mob.R1[0], y: mob.y + mob.R1[1]},
+        r4:{ x: mob.x + mob.R4[0], y: mob.y + mob.R4[1]},
+        l1:{ x: mob.x + mob.L1[0], y: mob.y + mob.L1[1]},
+        l4:{ x: mob.x + mob.L4[0], y: mob.y + mob.L4[1]}
+    };
+    l3.value = hero_points.r1.x + ' ' + hero_points.r1.y + ' // ' + mob_points.l1.x + ' ' + mob_points.r1.x + ' -- ' + mob_points.l1.y + ' ' + mob_points.l4.y;
+    if(hero_points.r1.x >= mob_points.l1.x && hero_points.r1.x <= mob_points.r1.x
+        && hero_points.r1.y >= mob_points.l1.y && hero_points.r1.y <= mob_points.l4.y){
+        return true;
+    }
+    if(hero_points.r4.x >= mob_points.l1.x && hero_points.r4.x <= mob_points.r1.x
+        && hero_points.r4.y >= mob_points.l1.y && hero_points.r4.y <= mob_points.l4.y){
+        return true;
+    }
+    if(hero_points.l1.x >= mob_points.l1.x && hero_points.l1.x <= mob_points.r1.x
+        && hero_points.l1.y >= mob_points.l1.y && hero_points.l1.y <= mob_points.l4.y){
+        return true;
+    }
+    if(hero_points.l4.x >= mob_points.l1.x && hero_points.l4.x <= mob_points.r1.x
+        && hero_points.l4.y >= mob_points.l1.y && hero_points.l4.y <= mob_points.l4.y){
+        return true;
+    }
+    return false;
+
+}
+
 create_enemy = (enemy_x, enemy_y, type) => {
     let sprite = '';
     let alternate_sprite = '';
@@ -319,7 +349,7 @@ create_enemy = (enemy_x, enemy_y, type) => {
             sprite = monster;
             alternate_sprite = monster2;
             hp=1;
-            max_walk_speed = 1;
+            max_walk_speed = 0.2;
             break
         case 'flying':
             sprite = bat;

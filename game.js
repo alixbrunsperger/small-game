@@ -70,10 +70,24 @@ ctx.fillText("Hello World",10,50);
         ctx.fillRect(mob.x -20, mob.y -25, mob.hp*40, 5);
         ctx.fillStyle = "green";
         ctx.fillRect(mob.x -20, mob.y -25 ,40,5);
-        l3.value = mob.x + ' ' + mob.y + ' ' + current_map;
+        //l3.value = mob.x + ' ' + mob.y + ' ' + current_map;
+
+        if(touch_enemy(mob)){
+            hero.current_hp = hero.current_hp-1;
+        }
+
+        //if attack remove attack key
+
+        //if touched, handle visible effect + timer
+
+
+        //if attack check that weapon reach monster
+
     });
 
     ctx.restore();
+
+
 
     //l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
 
