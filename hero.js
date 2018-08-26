@@ -129,6 +129,9 @@ var hero = {
     max_fall_speed: 6,
     hp: 5,
     current_hp: 5,
+    damage: 1,
+    timer_attack: 0,
+    timer_hit: 0,
 
     // State
     freefall: true // freefall
@@ -346,3 +349,18 @@ var move_hero = function(){
         }
     }
 }
+
+isHeroTouched = function(){
+    return hero.timer_hit > 0;
+};
+
+update_hero = function() {
+    if(hero.timer_hit > 0){
+        hero.timer_hit = hero.timer_hit - 1;
+    }
+    if(keys.attack === true){
+        hero.timer_attack = hero.timer_attack + 1;
+    } else {
+        hero.attack_timer = 0;
+    }
+};

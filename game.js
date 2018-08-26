@@ -47,13 +47,18 @@ ctx.fillText("Hello World",10,50);
     ctx.save();
 
     ctx.fillStyle = "red";
-    ctx.fillRect(hero.x -20, hero.y -25, hero.hp*8, 5);
+    ctx.fillRect(hero.x -20, hero.y -25, 40, 5);
     ctx.fillStyle = "green";
-    ctx.fillRect(hero.x -20, hero.y -25 ,40,5);
+    ctx.fillRect(hero.x -20, hero.y -25 ,hero.current_hp*8,5);
 
     //ctx.restore();
     ctx.translate(hero.x, hero.y);
+    ctx.save();
+    if(isHeroTouched()){
+        ctx.globalAlpha = 0.4;
+    }
     ctx.drawImage(hero_sprite, -16, -16, tile_w, tile_h);
+    ctx.restore();
 
     keys.attack ?
         ctx.drawImage(dagger_sprite2 , 5, 0, 16, 16)
@@ -67,19 +72,22 @@ ctx.fillText("Hello World",10,50);
         ctx.restore();
         ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, 32, 32);
         ctx.fillStyle = "red";
-        ctx.fillRect(mob.x -20, mob.y -25, mob.hp*40, 5);
+        ctx.fillRect(mob.x -20, mob.y -25, 40, 5);
         ctx.fillStyle = "green";
-        ctx.fillRect(mob.x -20, mob.y -25 ,40,5);
+        ctx.fillRect(mob.x -20, mob.y -25 , mob.current_hp*40,5);
         //l3.value = mob.x + ' ' + mob.y + ' ' + current_map;
 
-        if(touch_enemy(mob)){
+    console.log(isHeroTouched());
+    if(!isHeroTouched() && touch_enemy(mob)){
             hero.current_hp = hero.current_hp-1;
+            hero.timer_hit = 50;
         }
+
+        update_hero();
 
         //if attack remove attack key
 
         //if touched, handle visible effect + timer
-
 
         //if attack check that weapon reach monster
 

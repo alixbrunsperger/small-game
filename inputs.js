@@ -8,13 +8,13 @@ keys = {
   attack:false
 };
 
-timer = 0;
+attack_timer = 0;
 
 // Key down / keypress (left, top, right)
 onkeydown = onkeypress = function(e){
   switch(e.keyCode){
     case 32:
-      keys.attack = timer < 5 ;
+      keys.attack = hero.attack_timer < 2 ;
       break;
     case 37:
       keys.left = true;
@@ -32,7 +32,6 @@ onkeydown = onkeypress = function(e){
 onkeyup = function(e){
   switch(e.keyCode){
     case 32:
-      timer=0;
       keys.attack = false;
       break;
     case 37:

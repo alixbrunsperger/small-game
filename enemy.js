@@ -305,13 +305,13 @@ switchEnemySprite = (mob) => {
 }
 
 touch_enemy = function(mob){
-    let hero_points = {
+    var hero_points = {
         r1:{ x: hero.x + hero.R1[0], y: hero.y + hero.R1[1]},
         r4:{ x: hero.x + hero.R4[0], y: hero.y + hero.R4[1]},
         l1:{ x: hero.x + hero.L1[0], y: hero.y + hero.L1[1]},
         l4:{ x: hero.x + hero.L4[0], y: hero.y + hero.L4[1]}
     };
-    let mob_points = {
+    var mob_points = {
         r1:{ x: mob.x + mob.R1[0], y: mob.y + mob.R1[1]},
         r4:{ x: mob.x + mob.R4[0], y: mob.y + mob.R4[1]},
         l1:{ x: mob.x + mob.L1[0], y: mob.y + mob.L1[1]},
@@ -350,23 +350,24 @@ create_enemy = (enemy_x, enemy_y, type) => {
             alternate_sprite = monster2;
             hp=1;
             max_walk_speed = 0.2;
-            break
+            break;
         case 'flying':
             sprite = bat;
             alternate_sprite = bat2;
             hp=1;
             gravity: 0;
-            break
+            break;
         case 'tank':
             sprite = tank;
             alternate_sprite = tank;
             hp=3;
-            break
+            max_walk_speed = 0.1;
+            break;
         case 'boss':
             sprite = boss;
             alternate_sprite = boss;
             hp=10;
-            break
+            break;
     }
     return {
         x: enemy_x, // x position of C2
