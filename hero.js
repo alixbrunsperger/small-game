@@ -360,7 +360,5 @@ update_hero = function() {
     }
     if(keys.attack === true){
         hero.timer_attack = hero.timer_attack + 1;
-    } else {
-        hero.attack_timer = 0;
     }
 };

@@ -304,7 +304,7 @@ switchEnemySprite = (mob) => {
     mob.current_sprite = mob.current_sprite === mob.sprite ? mob.alternate_sprite : mob.sprite;
 }
 
-touch_enemy = function(mob){
+collision_enemy = function(mob){
     var hero_points = {
         r1:{ x: hero.x + hero.R1[0], y: hero.y + hero.R1[1]},
         r4:{ x: hero.x + hero.R4[0], y: hero.y + hero.R4[1]},
@@ -317,26 +317,56 @@ touch_enemy = function(mob){
         l1:{ x: mob.x + mob.L1[0], y: mob.y + mob.L1[1]},
         l4:{ x: mob.x + mob.L4[0], y: mob.y + mob.L4[1]}
     };
-    l3.value = hero_points.r1.x + ' ' + hero_points.r1.y + ' // ' + mob_points.l1.x + ' ' + mob_points.r1.x + ' -- ' + mob_points.l1.y + ' ' + mob_points.l4.y;
-    if(hero_points.r1.x >= mob_points.l1.x && hero_points.r1.x <= mob_points.r1.x
-        && hero_points.r1.y >= mob_points.l1.y && hero_points.r1.y <= mob_points.l4.y){
+
+    return collide(hero_points, mob_points);
+}
+
+attack_enemy = function(mob){
+    var weapon_points = {
+        r1:{ x: hero.x + 5, y: hero.y - 6},
+        r4:{ x: hero.x + 5 + 16, y: hero.y -6},
+        l1:{ x: hero.x + 5 + 16, y: hero.y + 16},
+        l4:{ x: hero.x + 5, y: hero.y + 16}
+    };
+    var mob_points = {
+        r1:{ x: mob.x + mob.R1[0], y: mob.y + mob.R1[1]},
+        r4:{ x: mob.x + mob.R4[0], y: mob.y + mob.R4[1]},
+        l1:{ x: mob.x + mob.L1[0], y: mob.y + mob.L1[1]},
+        l4:{ x: mob.x + mob.L4[0], y: mob.y + mob.L4[1]}
+    };
+
+    return collide(weapon_points, mob_points);
+}
+
+collide = function(obj1, obj2){
+    if(obj1.r1.x >= obj2.l1.x && obj1.r1.x <= obj2.r1.x
+        && obj1.r1.y >= obj2.l1.y && obj1.r1.y <= obj2.l4.y){
         return true;
     }
-    if(hero_points.r4.x >= mob_points.l1.x && hero_points.r4.x <= mob_points.r1.x
-        && hero_points.r4.y >= mob_points.l1.y && hero_points.r4.y <= mob_points.l4.y){
+    if(obj1.r4.x >= obj2.l1.x && obj1.r4.x <= obj2.r1.x
+        && obj1.r4.y >= obj2.l1.y && obj1.r4.y <= obj2.l4.y){
         return true;
     }
-    if(hero_points.l1.x >= mob_points.l1.x && hero_points.l1.x <= mob_points.r1.x
-        && hero_points.l1.y >= mob_points.l1.y && hero_points.l1.y <= mob_points.l4.y){
+    if(obj1.l1.x >= obj2.l1.x && obj1.l1.x <= obj2.r1.x
+        && obj1.l1.y >= obj2.l1.y && obj1.l1.y <= obj2.l4.y){
         return true;
     }
-    if(hero_points.l4.x >= mob_points.l1.x && hero_points.l4.x <= mob_points.r1.x
-        && hero_points.l4.y >= mob_points.l1.y && hero_points.l4.y <= mob_points.l4.y){
+    if(obj1.l4.x >= obj2.l1.x && obj1.l4.x <= obj2.r1.x
+        && obj1.l4.y >= obj2.l1.y && obj1.l4.y <= obj2.l4.y){
         return true;
     }
     return false;
+};
 
-}
+update_monster = function(mob) {
+    if(mob.timer_hit > 0){
+        mob.timer_hit = hero.timer_hit - 1;
+    }
+};
+
+isMonsterTouched = function(monster){
+    return monster.timer_hit > 0;
+};
 
 create_enemy = (enemy_x, enemy_y, type) => {
     let sprite = '';
@@ -348,7 +378,7 @@ create_enemy = (enemy_x, enemy_y, type) => {
         case 'basic':
             sprite = monster;
             alternate_sprite = monster2;
-            hp=1;
+            hp=3;
             max_walk_speed = 0.2;
             break;
         case 'flying':

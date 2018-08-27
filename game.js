@@ -65,37 +65,43 @@ ctx.fillText("Hello World",10,50);
         :
         ctx.drawImage(dagger_sprite, 5, -6, 16, 16);
 
+    //ctx.save();
     enemies[current_map].forEach((mob) => {
         rotate_ennemies(mob, 0);
         total_frames % 10 ===0 && switchEnemySprite(mob);
         move_ennemies(mob);
         ctx.restore();
+        if(isMonsterTouched(mob)){
+            //ctx.globalAlpha = 0.4;
+        }
         ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, 32, 32);
         ctx.fillStyle = "red";
         ctx.fillRect(mob.x -20, mob.y -25, 40, 5);
         ctx.fillStyle = "green";
         ctx.fillRect(mob.x -20, mob.y -25 , mob.current_hp*40,5);
-        //l3.value = mob.x + ' ' + mob.y + ' ' + current_map;
+        //ctx.restore();
 
-    console.log(isHeroTouched());
-    if(!isHeroTouched() && touch_enemy(mob)){
+        if(!isHeroTouched() && collision_enemy(mob)){
             hero.current_hp = hero.current_hp-1;
             hero.timer_hit = 50;
         }
 
-        update_hero();
+        if(keys.attack && attack_enemy(mob) && !isMonsterTouched(mob)){
+            mob.current_hp = mob.current_hp -1;
+            if(mob.current_hp <= 0){
+                enemies[current_map].splice( enemies[current_map].indexOf(mob), 1 );
+            } else {
+                mob.timer_hit = 50;
+            }
+        }
 
-        //if attack remove attack key
 
-        //if touched, handle visible effect + timer
-
-        //if attack check that weapon reach monster
+        update_monster(mob);
 
     });
+    update_hero();
 
     ctx.restore();
-
-
 
     //l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
 
