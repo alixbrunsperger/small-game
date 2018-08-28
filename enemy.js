@@ -375,20 +375,20 @@ create_enemy = (enemy_x, enemy_y, type) => {
             max_walk_speed = 0.2;
             break;
         case 'flying':
-            sprite = bat;
-            alternate_sprite = bat2;
+            sprite = flying;
+            alternate_sprite = flying2;
             hp=1;
             gravity= 0;
             break;
         case 'tank':
             sprite = tank;
-            alternate_sprite = tank;
+            alternate_sprite = tank2;
             hp=3;
             max_walk_speed = 0.1;
             break;
         case 'boss':
             sprite = boss;
-            alternate_sprite = boss;
+            alternate_sprite = boss2;
             hp=10;
             break;
     }

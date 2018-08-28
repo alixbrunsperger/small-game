@@ -25,3 +25,12 @@ https://opengameart.org/content/magic-cliffs-environment
 
 ?
 https://opengameart.org/content/city-street
+
+//TODO
+
+- if no more HP => end
+- if reach last screen => end
+- handle last screen
+- assign enemies
+- update assets
+- find new weapon
