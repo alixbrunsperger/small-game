@@ -72,7 +72,7 @@ ctx.fillText("Hello World",10,50);
         move_ennemies(mob);
         ctx.restore();
         if(isMonsterTouched(mob)){
-            //ctx.globalAlpha = 0.4;
+            ctx.globalAlpha = 0.4;
         }
         ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, 32, 32);
         ctx.fillStyle = "red";
@@ -103,7 +103,14 @@ ctx.fillText("Hello World",10,50);
 
     ctx.restore();
 
-    //l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
+    texts[current_map].forEach((text) => {
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(text,canvas.width/2,(texts[current_map].indexOf(text)+1)* 50);
+    }, texts[current_map]);
+
+    l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
 
     // Debug
     /*for(var i in vectors){
@@ -117,12 +124,12 @@ ctx.fillText("Hello World",10,50);
     }*/
 
     // Debug enemies
-    enemies[current_map].forEach((mob) => {
+    /*enemies[current_map].forEach((mob) => {
         for(var i in vectors){
             ctx.fillStyle = "red";
             ctx.fillRect(mob.x + mob[i][0]-1, mob.y + mob[i][1]-1,2,2);
         }
-    })
+    })*/
 
     if(hero.x > tile_w * 24){
         change_step(true);

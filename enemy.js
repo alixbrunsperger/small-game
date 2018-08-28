@@ -246,13 +246,6 @@ var move_ennemies = function(enemy){
         }
     }
 
-
-    // Jump:
-    if(keys.up && !enemy.freefall && false){
-        enemy.freefall = true;
-        enemy.fall_speed += enemy.jump_speed;
-    }
-
     // Freefall:
     enemy.fall_speed += enemy.gravity;
 
@@ -378,14 +371,14 @@ create_enemy = (enemy_x, enemy_y, type) => {
         case 'basic':
             sprite = monster;
             alternate_sprite = monster2;
-            hp=3;
+            hp=1;
             max_walk_speed = 0.2;
             break;
         case 'flying':
             sprite = bat;
             alternate_sprite = bat2;
             hp=1;
-            gravity: 0;
+            gravity= 0;
             break;
         case 'tank':
             sprite = tank;
@@ -444,9 +437,9 @@ enemies = [];
 enemies[0] = [];
 enemies[1] = [create_enemy(650,401,'basic')];
 //enemies[1] = [create_enemy(200,-200,'flying'), create_enemy(100,-250,'flying'), create_enemy(150,-150,'flying'), create_enemy(50,-300,'flying')];
-enemies[2] = [];
-enemies[3] = [];
-enemies[4] = [];
-enemies[5] = [];
-enemies[6] = [create_enemy(200,200,'boss')];
+enemies[2] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
+enemies[3] = [create_enemy(340,370,'basic'),create_enemy(700,270,'basic')];
+enemies[4] = [create_enemy(402,370,'basic'),create_enemy(700,271,'basic')];
+enemies[5] = [create_enemy(256,340,'basic'),create_enemy(462,370,'basic'),create_enemy(700,401,'basic')];
+enemies[6] = [create_enemy(650,401,'boss')];
 enemies[7] = [];
