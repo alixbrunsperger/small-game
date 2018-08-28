@@ -1,7 +1,7 @@
 /* Maps */
 
 maps = [];
-
+var end = false;
 maps[0] = [
   "0000000000000000000000000",
   "0000000000000000000000000",
@@ -184,9 +184,9 @@ change_step = (isForward) => {
           hero.x = isForward ? 73 : 680;
           hero.y = isForward ? 401 : 401;
           move_hero();
+          end=true;
           break;
       case 7 :
-          // Do nothing, it's the end.
           break;
   }
 };

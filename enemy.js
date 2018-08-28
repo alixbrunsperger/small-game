@@ -362,11 +362,11 @@ isMonsterTouched = function(monster){
 };
 
 create_enemy = (enemy_x, enemy_y, type) => {
-    let sprite = '';
-    let alternate_sprite = '';
-    let hp = 0;
-    let gravity = 1;
-    let max_walk_speed = 2;
+    var sprite = '';
+    var alternate_sprite = '';
+    var hp = 0;
+    var gravity = 1;
+    var max_walk_speed = 2;
     switch(type){
         case 'basic':
             sprite = monster;
@@ -389,22 +389,21 @@ create_enemy = (enemy_x, enemy_y, type) => {
         case 'boss':
             sprite = boss;
             alternate_sprite = boss2;
-            hp=10;
+            hp=5;
             break;
     }
     return {
-        x: enemy_x, // x position of C2
-        y: enemy_y, // y position of C2
+        x: enemy_x,
+        y: enemy_y,
         sprite: sprite,
         alternate_sprite: alternate_sprite,
         current_sprite: sprite,
         type: type,
-        angle: 0, // angle in radians (0: head on top)
-        // Vectors (rotated with the ennemy)
-        right: [], // Normalized vector to the "right" (relative to the ennemy)
-        bottom: [], // and "bottom"
-        L1: [], // Position of L1 from center (C2)
-        C1: [], // etc
+        angle: 0,
+        right: [],
+        bottom: [],
+        L1: [],
+        C1: [],
         R1: [],
         L2: [],
         R2: [],
@@ -415,31 +414,26 @@ create_enemy = (enemy_x, enemy_y, type) => {
         R4: [],
         L5: [],
         R5: [],
-        // Speeds and accelerations:
-        // Constant
         max_walk_speed: max_walk_speed,
         walk_acceleration: 0.2,
         walk_idle_deceleration: -1,
         jump_speed: -14,
         gravity: gravity,
-        // Variable
         walk_speed: 0,
         fall_speed: 0,
         max_fall_speed: 6,
         hp: hp,
         current_hp: hp,
-        // State
-        freefall: type !== 'flying' // freefall
+        freefall: type !== 'flying'
     };
 }
 
 enemies = [];
 enemies[0] = [];
 enemies[1] = [create_enemy(650,401,'basic')];
-//enemies[1] = [create_enemy(200,-200,'flying'), create_enemy(100,-250,'flying'), create_enemy(150,-150,'flying'), create_enemy(50,-300,'flying')];
 enemies[2] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
-enemies[3] = [create_enemy(340,370,'basic'),create_enemy(700,270,'basic')];
-enemies[4] = [create_enemy(402,370,'basic'),create_enemy(700,271,'basic')];
+enemies[3] = [create_enemy(340,370,'basic'),create_enemy(700,270,'basic'),create_enemy(650,201,'flying')];
+enemies[4] = [create_enemy(402,370,'basic'),create_enemy(700,271,'basic'),create_enemy(600,201,'flying'),create_enemy(650,251,'flying')];
 enemies[5] = [create_enemy(256,340,'basic'),create_enemy(462,370,'basic'),create_enemy(700,401,'basic')];
 enemies[6] = [create_enemy(650,401,'boss')];
 enemies[7] = [];

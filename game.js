@@ -8,6 +8,10 @@ var frametime = 0;
 var normal_frametime = 16;
 var frametime_coef = 0;
 var total_frames = 0;
+var up=1;
+var right=1;
+var invertUp = 1;
+var invertRight = 1;
 
 game = function(){
 
@@ -23,7 +27,9 @@ game = function(){
     //rotate_hero(zzz);
 
     // Make the hero move, walk, jump, fall...
-    move_hero();
+    if(!end){
+        move_hero();
+    }
 
     // Draw the scene
     canvas.width = canvas.width;
@@ -61,9 +67,9 @@ ctx.fillText("Hello World",10,50);
     ctx.restore();
 
     keys.attack ?
-        ctx.drawImage(dagger_sprite2 , 5, 0, 16, 16)
+        ctx.drawImage(keyboard_sprite2 , 5, 0, 16, 16)
         :
-        ctx.drawImage(dagger_sprite, 5, -6, 16, 16);
+        ctx.drawImage(keyboard_sprite, 5, -6, 16, 16);
 
     //ctx.save();
     enemies[current_map].forEach((mob) => {
@@ -132,7 +138,9 @@ ctx.fillText("Hello World",10,50);
     })*/
 
     if(hero.x > tile_w * 24){
-        change_step(true);
+        if(!(current_map === 6 && enemies[current_map].length !== 0)){
+            change_step(true);
+        }
     }
 
     if(hero.x < tile_w){
@@ -140,7 +148,18 @@ ctx.fillText("Hello World",10,50);
     }
 
     // Next frame
-    requestAnimationFrame(game);
+    if(hero.current_hp <= 0){
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "red";
+        ctx.fillText("You're dead! Refresh the page to start again", 150,250);
+    } else if (end) {
+        invertUp = up == 0 || up ==300 ? -invertUp : invertUp;
+        invertRight = right == 0 || right ==20 ? -invertRight : invertRight;
+        up = up + invertUp*1;
+        right = right + invertRight*1;
+        ctx.drawImage(nyancat, (canvas.width/2 -150+ up), (canvas.height/2 -10 + right), 32, 32);
+    }
+        requestAnimationFrame(game);
 };
 
 onload = function(){
