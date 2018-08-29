@@ -367,6 +367,8 @@ create_enemy = (enemy_x, enemy_y, type) => {
     var hp = 0;
     var gravity = 1;
     var max_walk_speed = 2;
+    var width = 32;
+    var height=32;
     switch(type){
         case 'basic':
             sprite = monster;
@@ -380,16 +382,11 @@ create_enemy = (enemy_x, enemy_y, type) => {
             hp=1;
             gravity= 0;
             break;
-        case 'tank':
-            sprite = tank;
-            alternate_sprite = tank2;
-            hp=3;
-            max_walk_speed = 0.1;
-            break;
         case 'boss':
             sprite = boss;
             alternate_sprite = boss2;
             hp=5;
+            max_walk_speed = 0.1;
             break;
     }
     return {
@@ -402,6 +399,8 @@ create_enemy = (enemy_x, enemy_y, type) => {
         angle: 0,
         right: [],
         bottom: [],
+        width: width,
+        height: height,
         L1: [],
         C1: [],
         R1: [],

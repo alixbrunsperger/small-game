@@ -55,7 +55,7 @@ ctx.fillText("Hello World",10,50);
     ctx.fillStyle = "red";
     ctx.fillRect(hero.x -20, hero.y -25, 40, 5);
     ctx.fillStyle = "green";
-    ctx.fillRect(hero.x -20, hero.y -25 ,hero.current_hp*8,5);
+    ctx.fillRect(hero.x -20, hero.y -25 ,(hero.current_hp*40)/hero.hp,5);
 
     //ctx.restore();
     ctx.translate(hero.x, hero.y);
@@ -80,11 +80,11 @@ ctx.fillText("Hello World",10,50);
         if(isMonsterTouched(mob)){
             ctx.globalAlpha = 0.4;
         }
-        ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, 32, 32);
+        ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, mob.width, mob.height);
         ctx.fillStyle = "red";
         ctx.fillRect(mob.x -20, mob.y -25, 40, 5);
         ctx.fillStyle = "green";
-        ctx.fillRect(mob.x -20, mob.y -25 , mob.current_hp*40,5);
+        ctx.fillRect(mob.x -20, mob.y -25 , (mob.current_hp*40)/mob.hp,5);
         //ctx.restore();
 
         if(!isHeroTouched() && collision_enemy(mob)){
