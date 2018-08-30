@@ -22,9 +22,7 @@ input { font-size: 10px; width: 200px }
   <img class=preload src="img/ground-tile2-opti.png" id=ground_tile2>
   <img class=preload src="img/ground-tile3-opti.png" id=ground_tile3>
   <img class=preload src="img/ceiling-tile-opti.png" id=ceiling_tile>
-  <img class=preload src="img/dagger-flipped.png" id=dagger_sprite>
   <img class=preload src="img/keyboard.png" id=keyboard_sprite>
-  <img class=preload src="img/dagger-flipped2.png" id=dagger_sprite2>
   <img class=preload src="img/keyboard2.png" id=keyboard_sprite2>
   <img class=preload src="img/flying.png" id=flying>
   <img class=preload src="img/flying2.png" id=flying2>
@@ -34,12 +32,22 @@ input { font-size: 10px; width: 200px }
   <img class=preload src="img/boss2.png" id=boss2>
   <img class=preload src="img/nyancat.jpg" id=nyancat>
 
-  <script src=canvas.js></script>
-  <script src=tiles.js></script>
-  <script src=maps.js></script>
-  <script src=texts.js></script>
-  <script src=inputs.js></script>
-  <script src=hero.js></script>
-  <script src=enemy.js></script>
-  <script src=game.js></script>
+  <script src=mini.js></script>
+
+  <script>
+      const loadScript = async (shouldLoadMinified) => {
+
+          await fetch('mini.js')
+              .then(function(response) {
+                  return response.blob();
+              })
+              .then(function(myBlob) {
+                  var objectURL = URL.createObjectURL(myBlob);
+                  console.log(objectURL);
+                  document.querySelector('#script').src=objectURL;
+              });
+      };
+      //loadScript();
+
+  </script>
 </body>
