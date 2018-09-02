@@ -1,5 +1,5 @@
-/* Game loop */
-
+// Requires
+var hero = require('./hero');
 
 // Constants
 var prev_time = +new Date();
@@ -153,8 +153,8 @@ ctx.fillText("Hello World",10,50);
         ctx.fillStyle = "red";
         ctx.fillText("You're dead! Refresh the page to start again", 150,250);
     } else if (end) {
-        invertUp = up == 0 || up ==300 ? -invertUp : invertUp;
-        invertRight = right == 0 || right ==20 ? -invertRight : invertRight;
+        invertUp = up == 0 || up == 300 ? -invertUp : invertUp;
+        invertRight = right == 0 || right == 20 ? -invertRight : invertRight;
         up = up + invertUp*1;
         right = right + invertRight*1;
         ctx.drawImage(nyancat, (canvas.width/2 -150+ up), (canvas.height/2 -10 + right), 32, 32);
@@ -163,6 +163,6 @@ ctx.fillText("Hello World",10,50);
 };
 
 onload = function(){
-    rotate_hero(0);
+    hero.rotate(0);
     game();
 }

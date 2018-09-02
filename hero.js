@@ -1,59 +1,9 @@
-/* Hero */
-
-/*
-* The hero is drawn as a 32 x 32 sprite, its hitbox is 22 x 28.
-* Its center point is at the center of its hitbox (x = 11; y = 14)
-* A few other points are placed around the hitbox to simplify the collision tests:
-* L1, C1, R1 (x = 0 / 11 / 21; y = 0)
-* L2, C2, R2 (x = 0 / 11 / 21; y = 14)
-* L3, R3 (x = 0 / 21; y = 20)
-* L4, L5, C3, R5, R4 (x = 0 / 4 / 11 / 16 / 21; y = 24)
-* 
-*               C1
-* L1 *-----------*-----------* R1
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |           C2          |
-* L2 *            *          * R2
-*    |    (hero.x; hero.y)   |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-* L3 *                       * R3
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-* L4 *---*-------*-------*---* R4
-*       L5      C3       R5
-*
-*/
-
-// Constants
 var hero_w = 22;
 var hero_h = 28;
 
-// Base vectors (Right and Bottom vectors of length 1)
-// These two vectors get rotated according to the hero's angle
-// then all the other vectors are deduced from them 
 var uright = [1,0];
 var ubottom = [0,1];
 
-// Working vectors
-// These vectors are not used as-is but rotated according to the hero's angle and stored in the hero's properties
 var uL1 = [-11, -14];
 var uC1 = [0, -14];
 var uR1 = [11, -14];
@@ -67,14 +17,11 @@ var uR4 = [11, 14];
 var uL5 = [-7, 14];
 var uR5 = [7, 14];
 
-
-// The names of the base vectors to rotate using maths, and their const equivalent
 base_vectors = {
     "right": uright,
     "bottom": ubottom
 }
 
-// The names of the important vectors to rotate using the base vectors, and their const equivalent
 vectors = {
     "L1": uL1,
     "C1": uC1,
@@ -89,54 +36,45 @@ vectors = {
     "L5": uL5,
     "R5": uR5,
 };
-
-
-// Properties
-var hero = {
-    x: 50, // x position of C2
-    y: 401, // y position of C2
-
-    angle: 0, // angle in radians (0: head on top)
-
-    // Vectors (rotated with the hero)
-    right: [], // Normalized vector to the "right" (relative to the hero)
-    bottom: [], // and "bottom"
-
-    L1: [], // Position of L1 from center (C2)
-    C1: [], // etc
-    R1: [],
-    L2: [],
-    R2: [],
-    L3: [],
-    C3: [],
-    R3: [],
-    L4: [],
-    R4: [],
-    L5: [],
-    R5: [],
-
-    // Speeds and accelerations:
-    // Constant
-    max_walk_speed: 3,
-    walk_acceleration: 0.3,
-    walk_idle_deceleration: -1,
-    jump_speed: -14,
-    gravity: 1,
-
-    // Variable
-    walk_speed: 0,
-    fall_speed: 0,
-    max_fall_speed: 6,
-    hp: 10,
-    current_hp: 10,
-    damage: 1,
-    timer_attack: 0,
-    timer_hit: 0,
-
-    // State
-    freefall: true // freefall
+module.exports = {
+    hero: {
+        x: 50,
+        y: 401,
+        angle: 0,
+        right: [],
+        bottom: [],
+        L1: [],
+        C1: [],
+        R1: [],
+        L2: [],
+        R2: [],
+        L3: [],
+        C3: [],
+        R3: [],
+        L4: [],
+        R4: [],
+        L5: [],
+        R5: [],
+        max_walk_speed: 3,
+        walk_acceleration: 0.3,
+        walk_idle_deceleration: -1,
+        jump_speed: -14,
+        gravity: 1,
+        walk_speed: 0,
+        fall_speed: 0,
+        max_fall_speed: 6,
+        hp: 10,
+        current_hp: 10,
+        damage: 1,
+        timer_attack: 0,
+        timer_hit: 0,
+        freefall: true,
+        rotate: rotate_hero,
+        move: move_hero,
+        isTouched: isHeroTouched,
+        update: update_hero
+    }
 };
-
 // Functions
 var rotate_hero = function(angle_deg){
 
