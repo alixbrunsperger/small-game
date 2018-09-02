@@ -293,9 +293,9 @@ var move_ennemies = function(enemy){
     }
 }
 
-switchEnemySprite = (mob) => {
+switchEnemySprite = function(mob) {
     mob.current_sprite = mob.current_sprite === mob.sprite ? mob.alternate_sprite : mob.sprite;
-}
+};
 
 collision_enemy = function(mob){
     var hero_points = {
@@ -361,7 +361,7 @@ isMonsterTouched = function(monster){
     return monster.timer_hit > 0;
 };
 
-create_enemy = (enemy_x, enemy_y, type) => {
+create_enemy = function(enemy_x, enemy_y, type) {
     var sprite = '';
     var alternate_sprite = '';
     var hp = 0;
@@ -425,7 +425,7 @@ create_enemy = (enemy_x, enemy_y, type) => {
         current_hp: hp,
         freefall: type !== 'flying'
     };
-}
+};
 
 enemies = [];
 enemies[0] = [];

@@ -139,7 +139,7 @@ maps[7] = [
 
 current_map = 0;
 
-change_step = (isForward) => {
+change_step = function(isForward) {
   switch(current_map){
       case 0 :
         if(isForward) {

@@ -72,7 +72,7 @@ ctx.fillText("Hello World",10,50);
         ctx.drawImage(keyboard_sprite, 5, -6, 16, 16);
 
     //ctx.save();
-    enemies[current_map].forEach((mob) => {
+    enemies[current_map].forEach(function(mob) {
         rotate_ennemies(mob, 0);
         total_frames % 10 ===0 && switchEnemySprite(mob);
         move_ennemies(mob);
@@ -109,7 +109,7 @@ ctx.fillText("Hello World",10,50);
 
     ctx.restore();
 
-    texts[current_map].forEach((text) => {
+    texts[current_map].forEach(function(text) {
         ctx.font = "20px Arial";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
@@ -130,7 +130,7 @@ ctx.fillText("Hello World",10,50);
     }*/
 
     // Debug enemies
-    /*enemies[current_map].forEach((mob) => {
+    /*enemies[current_map].forEach(function(mob) {
         for(var i in vectors){
             ctx.fillStyle = "red";
             ctx.fillRect(mob.x + mob[i][0]-1, mob.y + mob[i][1]-1,2,2);
