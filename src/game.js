@@ -1,5 +1,10 @@
 // Requires
 var hero = require('./hero');
+var mapsTools = require('./maps');
+var tiles = require('./tiles');
+var ctx = require('./canvas');
+var enemiesTools = require('./enemy');
+var texts = require('./texts');
 
 // Constants
 var prev_time = +new Date();
@@ -12,6 +17,56 @@ var up=1;
 var right=1;
 var invertUp = 1;
 var invertRight = 1;
+var end = false;
+var current_map = 0;
+
+var tile_w = 32;
+var tile_h = 32;
+
+var maps= mapsTools.maps;
+var enemies= enemiesTools.enemies;
+
+var keys = {
+    left: false,
+    up: false,
+    top: false,
+    attack:false
+};
+
+onkeydown = onkeypress = function(e){
+    switch(e.keyCode){
+        case 32:
+            keys.attack = hero.timer_attack < 1 ;
+            break;
+        case 37:
+            keys.left = true;
+            break;
+        case 38:
+            keys.up = true;
+            break;
+        case 39:
+            keys.right = true;
+            break;
+    }
+};
+
+onkeyup = function(e){
+    switch(e.keyCode){
+        case 32:
+            hero.timer_attack = 0;
+            keys.attack = false;
+            break;
+        case 37:
+            keys.left = false;
+            break;
+        case 38:
+            keys.up = false;
+            break;
+        case 39:
+            keys.right = false;
+            break;
+    }
+};
 
 game = function(){
 
@@ -21,23 +76,19 @@ game = function(){
     prev_time = time;
     frametime_coef = frametime / normal_frametime;
     total_frames = total_frames +1;
-    //l3.value = frametime_coef;
-
-    //zzz+=1;
-    //rotate_hero(zzz);
 
     // Make the hero move, walk, jump, fall...
     if(!end){
-        move_hero();
+        hero.move(keys, frametime_coef);
     }
 
     // Draw the scene
     canvas.width = canvas.width;
 
     /*
-    for map 0
-    ctx.font = "30px Arial";
-ctx.fillText("Hello World",10,50);
+     for map 0
+     ctx.font = "30px Arial";
+     ctx.fillText("Hello World",10,50);
      */
 
     ctx.fillStyle = "black";
@@ -60,7 +111,7 @@ ctx.fillText("Hello World",10,50);
     //ctx.restore();
     ctx.translate(hero.x, hero.y);
     ctx.save();
-    if(isHeroTouched()){
+    if(hero.isTouched()){
         ctx.globalAlpha = 0.4;
     }
     ctx.drawImage(hero_sprite, -16, -16, tile_w, tile_h);
@@ -73,11 +124,11 @@ ctx.fillText("Hello World",10,50);
 
     //ctx.save();
     enemies[current_map].forEach(function(mob) {
-        rotate_ennemies(mob, 0);
-        total_frames % 10 ===0 && switchEnemySprite(mob);
-        move_ennemies(mob);
+        enemiesTools.rotate_enemies(mob, 0);
+        total_frames % 10 ===0 && enemiesTools.switchEnemySprite(mob);
+        enemiesTools.move_enemies(mob, hero, frametime_coef);
         ctx.restore();
-        if(isMonsterTouched(mob)){
+        if(enemiesTools.isMonsterTouched(mob)){
             ctx.globalAlpha = 0.4;
         }
         ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, mob.width, mob.height);
@@ -87,12 +138,12 @@ ctx.fillText("Hello World",10,50);
         ctx.fillRect(mob.x -20, mob.y -25 , (mob.current_hp*40)/mob.hp,5);
         //ctx.restore();
 
-        if(!isHeroTouched() && collision_enemy(mob)){
+        if(!hero.isTouched() && enemiesTools.collision_enemy(mob, hero)){
             hero.current_hp = hero.current_hp-1;
             hero.timer_hit = 50;
         }
 
-        if(keys.attack && attack_enemy(mob) && !isMonsterTouched(mob)){
+        if(keys.attack && enemiesTools.attack_enemy(mob, hero) && !enemiesTools.isMonsterTouched(mob)){
             mob.current_hp = mob.current_hp -1;
             if(mob.current_hp <= 0){
                 enemies[current_map].splice( enemies[current_map].indexOf(mob), 1 );
@@ -101,11 +152,10 @@ ctx.fillText("Hello World",10,50);
             }
         }
 
-
-        update_monster(mob);
+        enemiesTools.update_monster(mob);
 
     });
-    update_hero();
+    hero.update(keys);
 
     ctx.restore();
 
@@ -120,31 +170,35 @@ ctx.fillText("Hello World",10,50);
 
     // Debug
     /*for(var i in vectors){
-      ctx.fillStyle = "red";
-      ctx.fillRect(hero.x + hero[i][0]-1, hero.y + hero[i][1]-1,2,2);
-    }
+     ctx.fillStyle = "red";
+     ctx.fillRect(hero.x + hero[i][0]-1, hero.y + hero[i][1]-1,2,2);
+     }
 
-    for(var j = 0; j < hero_w; j++){
-      ctx.fillStyle = "green";
-      ctx.fillRect(hero.x + hero.L4[0] + j * hero.right[0], hero.y + hero.L4[1] + j * hero.right[1],2,2);
-    }*/
+     for(var j = 0; j < hero_w; j++){
+     ctx.fillStyle = "green";
+     ctx.fillRect(hero.x + hero.L4[0] + j * hero.right[0], hero.y + hero.L4[1] + j * hero.right[1],2,2);
+     }*/
 
     // Debug enemies
     /*enemies[current_map].forEach(function(mob) {
-        for(var i in vectors){
-            ctx.fillStyle = "red";
-            ctx.fillRect(mob.x + mob[i][0]-1, mob.y + mob[i][1]-1,2,2);
-        }
-    })*/
+     for(var i in vectors){
+     ctx.fillStyle = "red";
+     ctx.fillRect(mob.x + mob[i][0]-1, mob.y + mob[i][1]-1,2,2);
+     }
+     })*/
 
     if(hero.x > tile_w * 24){
         if(!(current_map === 6 && enemies[current_map].length !== 0)){
-            change_step(true);
+            current_map = mapsTools.change_step(true, current_map, hero, keys, frametime_coef);
         }
     }
 
+    if(current_map === 7){
+        end=true;
+    }
+
     if(hero.x < tile_w){
-        change_step(false);
+        current_map = mapsTools.change_step(false, current_map, hero, keys, frametime_coef);
     }
 
     // Next frame
@@ -155,11 +209,37 @@ ctx.fillText("Hello World",10,50);
     } else if (end) {
         invertUp = up == 0 || up == 300 ? -invertUp : invertUp;
         invertRight = right == 0 || right == 20 ? -invertRight : invertRight;
-        up = up + invertUp*1;
-        right = right + invertRight*1;
+        up = up + invertUp * 1;
+        right = right + invertRight * 1;
         ctx.drawImage(nyancat, (canvas.width/2 -150+ up), (canvas.height/2 -10 + right), 32, 32);
-    }
         requestAnimationFrame(game);
+    } else {
+        requestAnimationFrame(game);
+    }
+};
+
+is_solid = function(x,y){
+    var tile_y = Math.floor(y / tile_h);
+    // Return false if the pixel is at undefined map coordinates
+    if(!maps[current_map][tile_y]){
+        return false;
+    }
+
+    var tile_x = Math.floor(x / tile_w);
+
+    if(!maps[current_map][tile_y][tile_x]){
+        return false;
+    }
+
+    // Return false if the tile is not solid
+    if(tiles[maps[current_map][tile_y][tile_x]].solid === 0){
+        return false;
+    }
+
+    // Return true if the tile is solid
+    if(tiles[maps[current_map][tile_y][tile_x]].solid === 1){
+        return true;
+    }
 };
 
 onload = function(){

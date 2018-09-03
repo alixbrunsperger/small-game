@@ -1,59 +1,10 @@
-/* Hero */
 
-/*
-* The enemy is drawn as a 32 x 32 sprite, its hitbox is 32 x 32.
-* Its center point is at the center of its hitbox (x = 16; y = 116)
-* A few other points are placed around the hitbox to simplify the collision tests:
-* L1, C1, R1 (x = 0 / 16 / 32; y = 0)
-* L2, C2, R2 (x = 0 / 16 / 32; y = 16)
-* L3, R3 (x = 0 / 24; y = 24)
-* L4, L5, C3, R5, R4 (x = 0 / 8 / 16 / 24 / 32; y = 32)
-* 
-*               C1
-* L1 *-----------*-----------* R1
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |           C2          |
-* L2 *            *          * R2
-*    |   (enemy.x; enemy.y)  |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-* L3 *                       * R3
-*    |                       |
-*    |                       |
-*    |                       |
-*    |                       |
-* L4 *---*-------*-------*---* R4
-*       L5      C3       R5
-*
-*/
-
-// Constants
 var enemy_w = 32;
 var enemy_h = 32;
 
-// Base vectors (Right and Bottom vectors of length 1)
-// These two vectors get rotated according to the enemy's angle
-// then all the other vectors are deduced from them 
 var uright = [1,0];
 var ubottom = [0,1];
 
-// Working vectors
-// These vectors are not used as-is but rotated according to the enemy's angle and stored in the enemy's properties
 var uL1 = [-16, -16];
 var uC1 = [0, -16];
 var uR1 = [16, -16];
@@ -67,14 +18,11 @@ var uR4 = [16, 16];
 var uL5 = [-8, 16];
 var uR5 = [8, 16];
 
-
-// The names of the base vectors to rotate using maths, and their const equivalent
 base_vectors = {
     "right": uright,
     "bottom": ubottom
 }
 
-// The names of the important vectors to rotate using the base vectors, and their const equivalent
 vectors = {
     "L1": uL1,
     "C1": uC1,
@@ -91,7 +39,7 @@ vectors = {
 };
 
 // Functions
-var rotate_ennemies = function(enemy, angle_deg){
+var rotate_enemies = function(enemy, angle_deg){
 
     // Convert in radians
     enemy.angle = angle_deg * Math.PI / 180;
@@ -114,11 +62,11 @@ var rotate_ennemies = function(enemy, angle_deg){
 }
 
 // Hero moves (left / right / jump / fall)
-var move_ennemies = function(enemy){
+var move_enemies = function(enemy, hero, frametime_coef){
 
     // Walk left:
     if(enemy.x > hero.x){
-        // Apply a negative walk acceleration to the ennemy's speed
+        // Apply a negative walk acceleration to the enemy's speed
         enemy.walk_speed -= enemy.walk_acceleration;
 
         // Limit the enemy's speed
@@ -297,7 +245,7 @@ switchEnemySprite = function(mob) {
     mob.current_sprite = mob.current_sprite === mob.sprite ? mob.alternate_sprite : mob.sprite;
 };
 
-collision_enemy = function(mob){
+collision_enemy = function(mob, hero){
     var hero_points = {
         r1:{ x: hero.x + hero.R1[0], y: hero.y + hero.R1[1]},
         r4:{ x: hero.x + hero.R4[0], y: hero.y + hero.R4[1]},
@@ -314,7 +262,7 @@ collision_enemy = function(mob){
     return collide(hero_points, mob_points);
 }
 
-attack_enemy = function(mob){
+attack_enemy = function(mob, hero){
     var weapon_points = {
         r1:{ x: hero.x + 5, y: hero.y - 6},
         r4:{ x: hero.x + 5 + 16, y: hero.y -6},
@@ -353,7 +301,7 @@ collide = function(obj1, obj2){
 
 update_monster = function(mob) {
     if(mob.timer_hit > 0){
-        mob.timer_hit = hero.timer_hit - 1;
+        mob.timer_hit = mob.timer_hit - 1;
     }
 };
 
@@ -385,7 +333,7 @@ create_enemy = function(enemy_x, enemy_y, type) {
         case 'boss':
             sprite = boss;
             alternate_sprite = boss2;
-            hp=5;
+            hp=2;
             max_walk_speed = 0.1;
             break;
     }
@@ -436,3 +384,15 @@ enemies[4] = [create_enemy(402,370,'basic'),create_enemy(700,271,'basic'),create
 enemies[5] = [create_enemy(256,340,'basic'),create_enemy(462,370,'basic'),create_enemy(700,401,'basic')];
 enemies[6] = [create_enemy(650,401,'boss')];
 enemies[7] = [];
+
+module.exports= {
+    enemies: enemies,
+    isMonsterTouched: isMonsterTouched,
+    update_monster: update_monster,
+    switchEnemySprite: switchEnemySprite,
+    collision_enemy: collision_enemy,
+    attack_enemy: attack_enemy,
+    rotate_enemies:rotate_enemies,
+    move_enemies: move_enemies,
+    update_monster: update_monster
+};

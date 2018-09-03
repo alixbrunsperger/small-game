@@ -1,7 +1,6 @@
 /* Maps */
 
-maps = [];
-var end = false;
+var maps = [];
 maps[0] = [
   "0000000000000000000000000",
   "0000000000000000000000000",
@@ -137,56 +136,59 @@ maps[7] = [
     "1111111111111111111111111",
 ];
 
-current_map = 0;
-
-change_step = function(isForward) {
+change_step = function(isForward, current_map, hero, keys, frametime_coef) {
   switch(current_map){
       case 0 :
         if(isForward) {
             current_map = current_map + 1;
             hero.x = 73;
             hero.y = 401;
-            move_hero();
+            hero.move(keys, frametime_coef);
         }
         break;
       case 1 :
           current_map = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
           hero.y = isForward ? 273 : 401;
-          move_hero();
+          hero.move(keys, frametime_coef);
           break;
       case 2 :
           current_map = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
           hero.y = isForward ? 401 : 401;
-          move_hero();
+          hero.move(keys, frametime_coef);
           break;
       case 3 :
           current_map = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
           hero.y = isForward ? 401 : 401;
-          move_hero();
+          hero.move(keys, frametime_coef);
           break;
       case 4 :
           current_map = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
           hero.y = isForward ? 273 : 273;
-          move_hero();
+          hero.move(keys, frametime_coef);
           break;
       case 5 :
           current_map = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
           hero.y = isForward ? 401 : 273;
-          move_hero();
+          hero.move(keys, frametime_coef);
           break;
       case 6 :
           current_map = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
           hero.y = isForward ? 401 : 401;
-          move_hero();
-          end=true;
+          hero.move(keys, frametime_coef);
           break;
       case 7 :
           break;
   }
+  return current_map;
 };
+
+module.exports = {
+    maps: maps,
+    change_step: change_step
+}

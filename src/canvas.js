@@ -20,3 +20,5 @@ canvas_rect = {};
   // Save DOMRect
   canvas_rect = canvas.getBoundingClientRect();
 })();
+
+module.exports = ctx;
