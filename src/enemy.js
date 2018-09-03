@@ -201,8 +201,6 @@ var move_enemies = function(enemy, hero, frametime_coef){
         enemy.fall_speed = enemy.max_fall_speed;
     }
 
-    l1.value = enemy.fall_speed;
-
     // Move vertically
     mv: for(var i = 0; i < Math.abs(enemy.fall_speed) * frametime_coef; i++){
         enemy.x += enemy.bottom[0] * Math.sign(enemy.fall_speed);
@@ -265,8 +263,8 @@ collision_enemy = function(mob, hero){
 attack_enemy = function(mob, hero){
     var weapon_points = {
         r1:{ x: hero.x + 5, y: hero.y - 6},
-        r4:{ x: hero.x + 5 + 16, y: hero.y -6},
-        l1:{ x: hero.x + 5 + 16, y: hero.y + 16},
+        r4:{ x: hero.x + 5 + 20, y: hero.y -6},
+        l1:{ x: hero.x + 5 + 20, y: hero.y + 16},
         l4:{ x: hero.x + 5, y: hero.y + 16}
     };
     var mob_points = {
@@ -382,8 +380,11 @@ enemies[2] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
 enemies[3] = [create_enemy(340,370,'basic'),create_enemy(700,270,'basic'),create_enemy(650,201,'flying')];
 enemies[4] = [create_enemy(402,370,'basic'),create_enemy(700,271,'basic'),create_enemy(600,201,'flying'),create_enemy(650,251,'flying')];
 enemies[5] = [create_enemy(256,340,'basic'),create_enemy(462,370,'basic'),create_enemy(700,401,'basic')];
-enemies[6] = [create_enemy(650,401,'boss')];
-enemies[7] = [];
+enemies[6] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
+enemies[7] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
+enemies[8] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
+enemies[9] = [create_enemy(650,401,'boss')];
+enemies[10] = [];
 
 module.exports= {
     enemies: enemies,

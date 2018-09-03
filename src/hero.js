@@ -208,8 +208,6 @@ var move_hero = function(keys, frametime_coef){
         this.fall_speed = this.max_fall_speed;
     }
 
-    l1.value = this.fall_speed;
-
     // Move vertically
     mv: for(var i = 0; i < Math.abs(this.fall_speed) * frametime_coef; i++){
         this.x += this.bottom[0] * Math.sign(this.fall_speed);

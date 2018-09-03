@@ -166,39 +166,18 @@ game = function(){
         ctx.fillText(text,canvas.width/2,(texts[current_map].indexOf(text)+1)* 50);
     }, texts[current_map]);
 
-    l3.value = hero.x + ' ' + hero.y + ' ' + current_map;
-
-    // Debug
-    /*for(var i in vectors){
-     ctx.fillStyle = "red";
-     ctx.fillRect(hero.x + hero[i][0]-1, hero.y + hero[i][1]-1,2,2);
-     }
-
-     for(var j = 0; j < hero_w; j++){
-     ctx.fillStyle = "green";
-     ctx.fillRect(hero.x + hero.L4[0] + j * hero.right[0], hero.y + hero.L4[1] + j * hero.right[1],2,2);
-     }*/
-
-    // Debug enemies
-    /*enemies[current_map].forEach(function(mob) {
-     for(var i in vectors){
-     ctx.fillStyle = "red";
-     ctx.fillRect(mob.x + mob[i][0]-1, mob.y + mob[i][1]-1,2,2);
-     }
-     })*/
-
     if(hero.x > tile_w * 24){
-        if(!(current_map === 6 && enemies[current_map].length !== 0)){
-            current_map = mapsTools.change_step(true, current_map, hero, keys, frametime_coef);
+        if(!(current_map === 9 && enemies[current_map].length !== 0)){
+            current_map = mapsTools.change_step(true, current_map, hero, keys, frametime_coef, maps);
         }
     }
 
-    if(current_map === 7){
+    if(current_map === 10){
         end=true;
     }
 
     if(hero.x < tile_w){
-        current_map = mapsTools.change_step(false, current_map, hero, keys, frametime_coef);
+        current_map = mapsTools.change_step(false, current_map, hero, keys, frametime_coef, maps);
     }
 
     // Next frame
@@ -207,8 +186,8 @@ game = function(){
         ctx.fillStyle = "red";
         ctx.fillText("You're dead! Refresh the page to start again", 150,250);
     } else if (end) {
-        invertUp = up == 0 || up == 300 ? -invertUp : invertUp;
-        invertRight = right == 0 || right == 20 ? -invertRight : invertRight;
+        invertUp = up === 0 || up === 300 ? -invertUp : invertUp;
+        invertRight = right === 0 || right === 20 ? -invertRight : invertRight;
         up = up + invertUp * 1;
         right = right + invertRight * 1;
         ctx.drawImage(nyancat, (canvas.width/2 -150+ up), (canvas.height/2 -10 + right), 32, 32);
@@ -218,26 +197,23 @@ game = function(){
     }
 };
 
-is_solid = function(x,y){
+is_solid = function(x,y, mapNumber){
+    var level = mapNumber ? mapNumber : current_map;
     var tile_y = Math.floor(y / tile_h);
     // Return false if the pixel is at undefined map coordinates
-    if(!maps[current_map][tile_y]){
+    if(!maps[level][tile_y]){
         return false;
     }
-
     var tile_x = Math.floor(x / tile_w);
-
-    if(!maps[current_map][tile_y][tile_x]){
+    if(!maps[level][tile_y][tile_x]){
         return false;
     }
-
     // Return false if the tile is not solid
-    if(tiles[maps[current_map][tile_y][tile_x]].solid === 0){
+    if(tiles[maps[level][tile_y][tile_x]].solid === 0){
         return false;
     }
-
     // Return true if the tile is solid
-    if(tiles[maps[current_map][tile_y][tile_x]].solid === 1){
+    if(tiles[maps[level][tile_y][tile_x]].solid === 1){
         return true;
     }
 };

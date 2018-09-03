@@ -1,194 +1,156 @@
-/* Maps */
-
-var maps = [];
-maps[0] = [
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "0000000000000000000000000",
-  "1111111111111111111111111",
-];
-
-maps[1] = [
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000011111000000000000000",
-    "1111111111111111111111111",
-];
-
-maps[2] = [
-    "0000444444444444444444444",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "1111100000000000000000000",
-    "2222222000000000000000000",
-    "2222222222000000000000000",
-    "2222222222220000000000000",
-    "2222222222222222222222222",
-];
-
-maps[3] = [
-    "4444444444444444444440000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000011111",
-    "0000000000000000002222222",
-    "0000000000000002222222222",
-    "0000000000000222222222222",
-    "2222222222222222222222222",
-];
-
-maps[4] = [
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000033333",
-    "0000000000000000003333333",
-    "0000000000000003333333333",
-    "0000000033333333333333333",
-    "1111111333333333333333333",
-];
-maps[5] = [
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "3333300000000000000000000",
-    "3333333000000000000000000",
-    "3333333333000000000000000",
-    "3333333333333333300000000",
-    "3333333333333333331111111",
-];
-
-maps[6] = [
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "1111111111111111111111111",
-];
-
-maps[7] = [
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "0000000000000000000000000",
-    "1111111111111111111111111",
-];
-
-change_step = function(isForward, current_map, hero, keys, frametime_coef) {
-  switch(current_map){
+findY = function(x, nextMap){
+    var y = 0;
+    while(!is_solid(x,y, nextMap))
+    {
+        y = y +1;
+    }
+    return y-20;
+}
+change_step = function(isForward, current_map, hero, keys, frametime_coef, maps) {
+    var nextMap = 0;
+    switch(current_map){
       case 0 :
         if(isForward) {
-            current_map = current_map + 1;
+            nextMap = current_map + 1;
+            //check
             hero.x = 73;
-            hero.y = 401;
+            hero.y = findY(hero.x, nextMap);
             hero.move(keys, frametime_coef);
         }
         break;
       case 1 :
-          current_map = isForward ? current_map + 1 : current_map - 1;
+          nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = isForward ? 273 : 401;
+          hero.y = findY(hero.x, nextMap);
           hero.move(keys, frametime_coef);
           break;
       case 2 :
-          current_map = isForward ? current_map + 1 : current_map - 1;
+          nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = isForward ? 401 : 401;
+          hero.y = findY(hero.x, nextMap);
           hero.move(keys, frametime_coef);
           break;
       case 3 :
-          current_map = isForward ? current_map + 1 : current_map - 1;
+          nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = isForward ? 401 : 401;
+          hero.y = findY(hero.x, nextMap);
           hero.move(keys, frametime_coef);
           break;
       case 4 :
-          current_map = isForward ? current_map + 1 : current_map - 1;
+          nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = isForward ? 273 : 273;
+          hero.y = findY(hero.x, nextMap);
           hero.move(keys, frametime_coef);
           break;
       case 5 :
-          current_map = isForward ? current_map + 1 : current_map - 1;
+          nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = isForward ? 401 : 273;
+          hero.y = findY(hero.x, nextMap);
           hero.move(keys, frametime_coef);
           break;
       case 6 :
-          current_map = isForward ? current_map + 1 : current_map - 1;
+          nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = isForward ? 401 : 401;
+          hero.y = findY(hero.x, nextMap);
           hero.move(keys, frametime_coef);
           break;
       case 7 :
+          nextMap = isForward ? current_map + 1 : current_map - 1;
+          hero.x = isForward ? 73 : 680;
+          hero.y = findY(hero.x, nextMap);
+          hero.move(keys, frametime_coef);
+          break;
+      case 8 :
+          nextMap = isForward ? current_map + 1 : current_map - 1;
+          hero.x = isForward ? 73 : 680;
+          hero.y = findY(hero.x, nextMap);
+          hero.move(keys, frametime_coef);
+          break;
+      case 9 :
+          nextMap = isForward ? current_map + 1 : current_map - 1;
+          hero.x = isForward ? 73 : 680;
+          hero.y = findY(hero.x, nextMap);
+          hero.move(keys, frametime_coef);
+          break;
+      case 10 :
           break;
   }
-  return current_map;
+  return nextMap;
+};
+
+initMaps= function(){
+    var maps = [];
+    var flatMap = [
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '0000000000000000000000000',
+        '1111111111111111111111111',
+    ];
+
+    for(var i = 0; i < 11 ; i++){
+        switch(i){
+            case 0 :
+            case 9 :
+            case 10 :
+                maps[i] = flatMap;
+                break;
+            case 1 :
+                maps[1] = flatMap
+                maps[1][12] = '0000011111000000000000000';
+                break;
+            default :
+                maps[i] = generateLevel();
+                break;
+        }
+    }
+
+    return maps;
+};
+
+generateLevel =  function(){
+    var map = [];
+    var height = Math.floor((Math.random() * 3));
+    var hasCellar = height === 3;
+    var nextBreak = Math.floor((Math.random() * 3)+1);
+    var emptyLine = '0000000000000000000000000';
+    var cellarLine = '0000444444444444444440000';
+    var emptyTile = 0;
+    var tile = Math.floor((Math.random() * 3)+1)
+
+    map = [
+        (hasCellar ? cellarLine : emptyLine),
+        emptyLine,
+        emptyLine,
+        emptyLine,
+        '','','','','','','','','',
+        emptyLine.replace(/0/g, tile)
+    ];
+
+    for(var i = 0; i<25;i++){
+        if(i % nextBreak === 0 && i > 0){
+            nextBreak = nextBreak + Math.floor((Math.random() * 3)+1);
+            height = height + Math.floor((Math.random() * 5)) -2;
+        }
+
+        for(var j= 4;j<13;j++){
+            map[j] = map[j] + (j < parseInt(13-height, 10) ? emptyTile : tile);
+        }
+    }
+
+    return map;
 };
 
 module.exports = {
-    maps: maps,
+    maps: initMaps(),
     change_step: change_step
 }
