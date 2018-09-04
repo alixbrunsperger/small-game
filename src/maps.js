@@ -1,11 +1,3 @@
-findY = function(x, nextMap){
-    var y = 0;
-    while(!is_solid(x,y, nextMap))
-    {
-        y = y +1;
-    }
-    return y-20;
-}
 change_step = function(isForward, current_map, hero, keys, frametime_coef, maps) {
     var nextMap = 0;
     switch(current_map){

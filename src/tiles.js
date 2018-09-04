@@ -1,4 +1,4 @@
-var tiles = {
+var tiles ={
   // 0: void
   '0': {
     sprite: void_sprite,

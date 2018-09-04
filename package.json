@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "js13k-boilerplate",
+  "name": "offline",
   "version": "1.1.0",
-  "description": "JS13KGames boilerplate",
-  "author": "Florent Cailhol <florent.cailhol@gmail.com>",
+  "description": "JS13KGames game (checkout readme to find all sources)",
+  "author": "Alix Brunsperger <alix.brunsperger@gmail.com>",
   "license": "MIT",
-  "repository": "ooflorent/js13k-boilerplate",
+  "repository": "alixbrunsperger/small-game",
   "devDependencies": {
     "browserify": "^5.10.0",
     "bundle-collapser": "^1.1.0",

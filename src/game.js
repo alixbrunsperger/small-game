@@ -87,14 +87,14 @@ game = function(){
 
     /*
      for map 0
-     ctx.font = "30px Arial";
-     ctx.fillText("Hello World",10,50);
+     ctx.font = '30px Arial';
+     ctx.fillText('Hello World',10,50);
      */
 
-    ctx.fillStyle = "black";
+    ctx.fillStyle = 'black';
     for(i in maps[current_map]){
         for(j in maps[current_map][i]){
-            if(maps[current_map][i][j] != "0"){
+            if(maps[current_map][i][j] != '0'){
                 ctx.drawImage(tiles[maps[current_map][i][j]].sprite, j * tile_w, i * tile_h, tile_w, tile_h);
             }
         }
@@ -103,9 +103,9 @@ game = function(){
     // Draw the hero
     ctx.save();
 
-    ctx.fillStyle = "red";
+    ctx.fillStyle = 'red';
     ctx.fillRect(hero.x -20, hero.y -25, 40, 5);
-    ctx.fillStyle = "green";
+    ctx.fillStyle = 'green';
     ctx.fillRect(hero.x -20, hero.y -25 ,(hero.current_hp*40)/hero.hp,5);
 
     //ctx.restore();
@@ -132,9 +132,9 @@ game = function(){
             ctx.globalAlpha = 0.4;
         }
         ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, mob.width, mob.height);
-        ctx.fillStyle = "red";
+        ctx.fillStyle = 'red';
         ctx.fillRect(mob.x -20, mob.y -25, 40, 5);
-        ctx.fillStyle = "green";
+        ctx.fillStyle = 'green';
         ctx.fillRect(mob.x -20, mob.y -25 , (mob.current_hp*40)/mob.hp,5);
         //ctx.restore();
 
@@ -160,9 +160,9 @@ game = function(){
     ctx.restore();
 
     texts[current_map].forEach(function(text) {
-        ctx.font = "20px Arial";
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'center';
         ctx.fillText(text,canvas.width/2,(texts[current_map].indexOf(text)+1)* 50);
     }, texts[current_map]);
 
@@ -182,9 +182,9 @@ game = function(){
 
     // Next frame
     if(hero.current_hp <= 0){
-        ctx.font = "20px Arial";
-        ctx.fillStyle = "red";
-        ctx.fillText("You're dead! Refresh the page to start again", 150,250);
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'red';
+        ctx.fillText('You are dead! Refresh the page to start again', 150,250);
     } else if (end) {
         invertUp = up === 0 || up === 300 ? -invertUp : invertUp;
         invertRight = right === 0 || right === 20 ? -invertRight : invertRight;
@@ -216,6 +216,15 @@ is_solid = function(x,y, mapNumber){
     if(tiles[maps[level][tile_y][tile_x]].solid === 1){
         return true;
     }
+};
+
+findY = function(x, map){
+    var y = 0;
+    while(!is_solid(x,y, map))
+    {
+        y = y +1;
+    }
+    return y-20;
 };
 
 onload = function(){

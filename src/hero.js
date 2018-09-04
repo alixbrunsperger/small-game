@@ -18,23 +18,23 @@ var uL5 = [-7, 14];
 var uR5 = [7, 14];
 
 base_vectors = {
-    "right": uright,
-    "bottom": ubottom
+    'right': uright,
+    'bottom': ubottom
 }
 
 vectors = {
-    "L1": uL1,
-    "C1": uC1,
-    "R1": uR1,
-    "L2": uL2,
-    "R2": uR2,
-    "L3": uL3,
-    "C3": uC3,
-    "R3": uR3,
-    "L4": uL4,
-    "R4": uR4,
-    "L5": uL5,
-    "R5": uR5,
+    'L1': uL1,
+    'C1': uC1,
+    'R1': uR1,
+    'L2': uL2,
+    'R2': uR2,
+    'L3': uL3,
+    'C3': uC3,
+    'R3': uR3,
+    'L4': uL4,
+    'R4': uR4,
+    'L5': uL5,
+    'R5': uR5,
 };
 // Functions
 var rotate_hero = function(angle_deg){
@@ -113,7 +113,7 @@ var move_hero = function(keys, frametime_coef){
         // Detect collision on the right (R1,R2,R3)
         if(this.walk_speed > 0){
 
-            // Climb a slope on the right (one solid between R4 and R3, but R1 + 3 "up", C1, L1, R2 and R3 not solid)
+            // Climb a slope on the right (one solid between R4 and R3, but R1 + 3 'up', C1, L1, R2 and R3 not solid)
             if(
                 !is_solid(this.x + this.R1[0] + -3 * this.bottom[0], this.y + this.R1[1] + -3 * this.bottom[1])
                 &&
@@ -154,7 +154,7 @@ var move_hero = function(keys, frametime_coef){
         // Detect collision on the left (L1,L2,L3)
         else if(this.walk_speed < 0){
 
-            // Climb a slope on the left (one solid between L4 and L3, but L1 + 3 "up", C1, R1, L2 and L3 not solid)
+            // Climb a slope on the left (one solid between L4 and L3, but L1 + 3 'up', C1, R1, L2 and L3 not solid)
             if(
                 !is_solid(this.x + this.L1[0] + -3 * this.bottom[0], this.y + this.L1[1] + -3 * this.bottom[1])
                 &&

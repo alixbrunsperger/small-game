@@ -19,23 +19,23 @@ var uL5 = [-8, 16];
 var uR5 = [8, 16];
 
 base_vectors = {
-    "right": uright,
-    "bottom": ubottom
+    'right': uright,
+    'bottom': ubottom
 }
 
 vectors = {
-    "L1": uL1,
-    "C1": uC1,
-    "R1": uR1,
-    "L2": uL2,
-    "R2": uR2,
-    "L3": uL3,
-    "C3": uC3,
-    "R3": uR3,
-    "L4": uL4,
-    "R4": uR4,
-    "L5": uL5,
-    "R5": uR5,
+    'L1': uL1,
+    'C1': uC1,
+    'R1': uR1,
+    'L2': uL2,
+    'R2': uR2,
+    'L3': uL3,
+    'C3': uC3,
+    'R3': uR3,
+    'L4': uL4,
+    'R4': uR4,
+    'L5': uL5,
+    'R5': uR5,
 };
 
 // Functions
@@ -91,15 +91,12 @@ var move_enemies = function(enemy, hero, frametime_coef){
     else{
         if(Math.abs(enemy.walk_speed) < 1){
             enemy.walk_speed = 0;
-        }
-
-        else{
+        } else{
 
             // If the enemy stops walking, decelerate
             if(enemy.walk_speed > 0){
                 enemy.walk_speed += enemy.walk_idle_deceleration;
-            }
-            else if(enemy.walk_speed < 0){
+            } else if(enemy.walk_speed < 0){
                 enemy.walk_speed -= enemy.walk_idle_deceleration;
             }
         }
@@ -112,8 +109,7 @@ var move_enemies = function(enemy, hero, frametime_coef){
 
         // Detect collision on the right (R1,R2,R3)
         if(enemy.walk_speed > 0){
-
-            // Climb a slope on the right (one solid between R4 and R3, but R1 + 3 "up", C1, L1, R2 and R3 not solid)
+            // Climb a slope on the right (one solid between R4 and R3, but R1 + 3 'up', C1, L1, R2 and R3 not solid)
             if(
                 !is_solid(enemy.x + enemy.R1[0] + -3 * enemy.bottom[0], enemy.y + enemy.R1[1] + -3 * enemy.bottom[1])
                 &&
@@ -150,11 +146,10 @@ var move_enemies = function(enemy, hero, frametime_coef){
                 break;
             }
         }
-
         // Detect collision on the left (L1,L2,L3)
         else if(enemy.walk_speed < 0){
 
-            // Climb a slope on the left (one solid between L4 and L3, but L1 + 3 "up", C1, R1, L2 and L3 not solid)
+            // Climb a slope on the left (one solid between L4 and L3, but L1 + 3 'up', C1, R1, L2 and L3 not solid)
             if(
                 !is_solid(enemy.x + enemy.L1[0] + -3 * enemy.bottom[0], enemy.y + enemy.L1[1] + -3 * enemy.bottom[1])
                 &&
@@ -386,8 +381,52 @@ enemies[8] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
 enemies[9] = [create_enemy(650,401,'boss')];
 enemies[10] = [];
 
+initEnemies= function(){
+    var enemies = [];
+
+
+    for(var i = 0; i < 11 ; i++){
+        switch(i){
+            case 0 :
+            case 10 :
+                enemies[i] = [];
+                break;
+            case 1 :
+                enemies[i] = [create_enemy(650,401,'basic')];
+                break;
+            case 9 :
+                enemies[i] = [create_enemy(650,401,'boss')]
+                break;
+            default :
+                enemies[i] = generateEnemies(i);
+                break;
+        }
+    }
+
+    return maps;
+};
+
+generateEnemies = function(mapNumber){
+    var number = Math.floor((Math.random() * 3)+1);
+    var enemy_type = '';
+    var x = 0;
+    var y = 0;
+    var enemies =[];
+
+    for(var i = 0 ; 1<number; i++){
+         enemy_type = Math.floor(Math.random()) ? 'basic' : 'flying';
+         x = Math.floor((Math.random() * 300)+350);
+         y = findY(x, mapNumber);
+         y = enemy_type === 'flying' ? y - Math.floor((Math.random() * 100)) : y;
+
+        enemies.push(create_enemy(x,y,enemy_type));
+    }
+
+    return enemies;
+};
+
 module.exports= {
-    enemies: enemies,
+    enemies: initEnemies(),
     isMonsterTouched: isMonsterTouched,
     update_monster: update_monster,
     switchEnemySprite: switchEnemySprite,
