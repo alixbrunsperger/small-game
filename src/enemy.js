@@ -73,10 +73,7 @@ var move_enemies = function(enemy, hero, frametime_coef){
         if(enemy.walk_speed < -enemy.max_walk_speed){
             enemy.walk_speed = -enemy.max_walk_speed;
         }
-    }
-
-    // Walk right:
-    else if(enemy.x < hero.x){
+    } else if(enemy.x < hero.x){
         // Apply a negative walk acceleration to the enemy's speed
         enemy.walk_speed += enemy.walk_acceleration;
 
@@ -84,14 +81,10 @@ var move_enemies = function(enemy, hero, frametime_coef){
         if(enemy.walk_speed > enemy.max_walk_speed){
             enemy.walk_speed = enemy.max_walk_speed;
         }
-    }
-
-    // Idle:
-
-    else{
+    } else {
         if(Math.abs(enemy.walk_speed) < 1){
             enemy.walk_speed = 0;
-        } else{
+        } else {
 
             // If the enemy stops walking, decelerate
             if(enemy.walk_speed > 0){
@@ -145,13 +138,10 @@ var move_enemies = function(enemy, hero, frametime_coef){
                 enemy.y -= enemy.right[1];
                 break;
             }
-        }
-        // Detect collision on the left (L1,L2,L3)
-        else if(enemy.walk_speed < 0){
+        } else if(enemy.walk_speed < 0){
 
             // Climb a slope on the left (one solid between L4 and L3, but L1 + 3 'up', C1, R1, L2 and L3 not solid)
-            if(
-                !is_solid(enemy.x + enemy.L1[0] + -3 * enemy.bottom[0], enemy.y + enemy.L1[1] + -3 * enemy.bottom[1])
+            if(!is_solid(enemy.x + enemy.L1[0] + -3 * enemy.bottom[0], enemy.y + enemy.L1[1] + -3 * enemy.bottom[1])
                 &&
                 !is_solid(enemy.x + enemy.C1[0], enemy.y + enemy.C1[1])
                 &&
@@ -159,8 +149,7 @@ var move_enemies = function(enemy, hero, frametime_coef){
                 &&
                 !is_solid(enemy.x + enemy.L2[0], enemy.y + enemy.L2[1])
                 &&
-                !is_solid(enemy.x + enemy.L3[0], enemy.y + enemy.L3[1])
-            ){
+                !is_solid(enemy.x + enemy.L3[0], enemy.y + enemy.L3[1])){
                 for(var j = 0; j < 4; j++){
                     if(is_solid(enemy.x + enemy.L4[0] + -j * enemy.bottom[0], enemy.y + enemy.L4[1] + -j * enemy.bottom[1])){
                         enemy.x += -enemy.bottom[0] * 4;
@@ -212,18 +201,13 @@ var move_enemies = function(enemy, hero, frametime_coef){
                     break mv;
                 }
             }
-        }
-
-        // Detect collision on the top (L1,C1,R1)
-        else if(
+        } else if(
             (enemy.fall_speed < 0 &&
-                (
-                    is_solid(enemy.x + enemy.L1[0], enemy.y + enemy.L1[1])
+                (is_solid(enemy.x + enemy.L1[0], enemy.y + enemy.L1[1])
                     ||
                     is_solid(enemy.x + enemy.C1[0], enemy.y + enemy.C1[1])
                     ||
-                    is_solid(enemy.x + enemy.R1[0], enemy.y + enemy.R1[1])
-                )
+                    is_solid(enemy.x + enemy.R1[0], enemy.y + enemy.R1[1]))
             )
         ){
             enemy.fall_speed = 0;
@@ -302,20 +286,20 @@ isMonsterTouched = function(monster){
     return monster.timer_hit > 0;
 };
 
-create_enemy = function(enemy_x, enemy_y, type) {
+create_enemy = function(enemy_x, enemy_y, type, width, height) {
     var sprite = '';
     var alternate_sprite = '';
     var hp = 0;
     var gravity = 1;
-    var max_walk_speed = 2;
-    var width = 32;
-    var height=32;
+    var max_walk_speed = Math.floor(Math.random() * 3 + 2);
+    var walk_speed = Math.floor(Math.random() * 4 +1) / 10;
+    var baseWidth = width ? width : 32;
+    var baseHeight = height ? height : 32;
     switch(type){
         case 'basic':
             sprite = monster;
             alternate_sprite = monster2;
             hp=1;
-            max_walk_speed = 0.2;
             break;
         case 'flying':
             sprite = flying;
@@ -327,7 +311,7 @@ create_enemy = function(enemy_x, enemy_y, type) {
             sprite = boss;
             alternate_sprite = boss2;
             hp=2;
-            max_walk_speed = 0.1;
+            max_walk_speed = 2;
             break;
     }
     return {
@@ -340,8 +324,8 @@ create_enemy = function(enemy_x, enemy_y, type) {
         angle: 0,
         right: [],
         bottom: [],
-        width: width,
-        height: height,
+        width: baseWidth,
+        height: baseHeight,
         L1: [],
         C1: [],
         R1: [],
@@ -355,7 +339,7 @@ create_enemy = function(enemy_x, enemy_y, type) {
         L5: [],
         R5: [],
         max_walk_speed: max_walk_speed,
-        walk_acceleration: 0.2,
+        walk_acceleration: walk_speed,
         walk_idle_deceleration: -1,
         jump_speed: -14,
         gravity: gravity,
@@ -368,22 +352,8 @@ create_enemy = function(enemy_x, enemy_y, type) {
     };
 };
 
-enemies = [];
-enemies[0] = [];
-enemies[1] = [create_enemy(650,401,'basic')];
-enemies[2] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
-enemies[3] = [create_enemy(340,370,'basic'),create_enemy(700,270,'basic'),create_enemy(650,201,'flying')];
-enemies[4] = [create_enemy(402,370,'basic'),create_enemy(700,271,'basic'),create_enemy(600,201,'flying'),create_enemy(650,251,'flying')];
-enemies[5] = [create_enemy(256,340,'basic'),create_enemy(462,370,'basic'),create_enemy(700,401,'basic')];
-enemies[6] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
-enemies[7] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
-enemies[8] = [create_enemy(340,370,'basic'),create_enemy(650,201,'flying')];
-enemies[9] = [create_enemy(650,401,'boss')];
-enemies[10] = [];
-
-initEnemies= function(){
+initEnemies= function(findY){
     var enemies = [];
-
 
     for(var i = 0; i < 11 ; i++){
         switch(i){
@@ -395,29 +365,29 @@ initEnemies= function(){
                 enemies[i] = [create_enemy(650,401,'basic')];
                 break;
             case 9 :
-                enemies[i] = [create_enemy(650,401,'boss')]
+                enemies[i] = [create_enemy(650,401,'boss', 64, 64)]
                 break;
             default :
-                enemies[i] = generateEnemies(i);
+                enemies[i] = generateEnemies(i, findY);
                 break;
         }
     }
 
-    return maps;
+    return enemies;
 };
 
-generateEnemies = function(mapNumber){
-    var number = Math.floor((Math.random() * 3)+1);
+generateEnemies = function(mapNumber, findY){
+    var number = Math.floor((Math.random() * 4)+1);
     var enemy_type = '';
     var x = 0;
     var y = 0;
     var enemies =[];
 
-    for(var i = 0 ; 1<number; i++){
-         enemy_type = Math.floor(Math.random()) ? 'basic' : 'flying';
-         x = Math.floor((Math.random() * 300)+350);
+    for(var i = 0 ; i<number; i++){
+         enemy_type = Math.floor(Math.random() * 2) ? 'basic' : 'flying';
+         x = Math.floor((Math.random() * 301)+350);
          y = findY(x, mapNumber);
-         y = enemy_type === 'flying' ? y - Math.floor((Math.random() * 100)) : y;
+         y = enemy_type === 'flying' ? y - Math.floor((Math.random() * 101)) : y;
 
         enemies.push(create_enemy(x,y,enemy_type));
     }
@@ -426,7 +396,7 @@ generateEnemies = function(mapNumber){
 };
 
 module.exports= {
-    enemies: initEnemies(),
+    initEnemies: initEnemies,
     isMonsterTouched: isMonsterTouched,
     update_monster: update_monster,
     switchEnemySprite: switchEnemySprite,

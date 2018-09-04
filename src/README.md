@@ -28,5 +28,4 @@ https://opengameart.org/content/city-street
 
 //TODO
 - bigger boss
-- random walk_speed
 - random enemy + location, walk_speed

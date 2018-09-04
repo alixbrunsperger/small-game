@@ -24,7 +24,37 @@ var tile_w = 32;
 var tile_h = 32;
 
 var maps= mapsTools.maps;
-var enemies= enemiesTools.enemies;
+
+is_solid = function(x,y, mapNumber){
+    var level = mapNumber ? mapNumber : current_map;
+    var tile_y = Math.floor(y / tile_h);
+    // Return false if the pixel is at undefined map coordinates
+    if(!maps[level][tile_y]){
+        return false;
+    }
+    var tile_x = Math.floor(x / tile_w);
+    if(!maps[level][tile_y][tile_x]){
+        return false;
+    }
+    // Return false if the tile is not solid
+    if(tiles[maps[level][tile_y][tile_x]].solid === 0){
+        return false;
+    }
+    // Return true if the tile is solid
+    if(tiles[maps[level][tile_y][tile_x]].solid === 1){
+        return true;
+    }
+};
+
+findY = function(x, map){
+    var y = 0;
+    while(!is_solid(x,y, map)) {
+        y = y +1;
+    }
+    return y-20;
+};
+
+var enemies= enemiesTools.initEnemies(findY);
 
 var keys = {
     left: false,
@@ -94,7 +124,7 @@ game = function(){
     ctx.fillStyle = 'black';
     for(i in maps[current_map]){
         for(j in maps[current_map][i]){
-            if(maps[current_map][i][j] != '0'){
+            if(maps[current_map][i][j] !== '0'){
                 ctx.drawImage(tiles[maps[current_map][i][j]].sprite, j * tile_w, i * tile_h, tile_w, tile_h);
             }
         }
@@ -185,46 +215,16 @@ game = function(){
         ctx.font = '20px Arial';
         ctx.fillStyle = 'red';
         ctx.fillText('You are dead! Refresh the page to start again', 150,250);
-    } else if (end) {
+    } else if(end){
         invertUp = up === 0 || up === 300 ? -invertUp : invertUp;
         invertRight = right === 0 || right === 20 ? -invertRight : invertRight;
-        up = up + invertUp * 1;
-        right = right + invertRight * 1;
+        up = up + invertUp;
+        right = right + invertRight;
         ctx.drawImage(nyancat, (canvas.width/2 -150+ up), (canvas.height/2 -10 + right), 32, 32);
         requestAnimationFrame(game);
     } else {
         requestAnimationFrame(game);
     }
-};
-
-is_solid = function(x,y, mapNumber){
-    var level = mapNumber ? mapNumber : current_map;
-    var tile_y = Math.floor(y / tile_h);
-    // Return false if the pixel is at undefined map coordinates
-    if(!maps[level][tile_y]){
-        return false;
-    }
-    var tile_x = Math.floor(x / tile_w);
-    if(!maps[level][tile_y][tile_x]){
-        return false;
-    }
-    // Return false if the tile is not solid
-    if(tiles[maps[level][tile_y][tile_x]].solid === 0){
-        return false;
-    }
-    // Return true if the tile is solid
-    if(tiles[maps[level][tile_y][tile_x]].solid === 1){
-        return true;
-    }
-};
-
-findY = function(x, map){
-    var y = 0;
-    while(!is_solid(x,y, map))
-    {
-        y = y +1;
-    }
-    return y-20;
 };
 
 onload = function(){

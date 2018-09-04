@@ -7,8 +7,24 @@
     // Code style
     "brace-style": [2, "1tbs"],
     "quotes": [2, "single", "avoid-escape"],
-    "space-after-keywords": [2, "always"],
-    "space-unary-word-ops": 2,
+    "keyword-spacing": [2, {
+      "before":false,
+      "after":false,
+      "overrides": {
+        "else": {
+          "before": true,
+          "after": true
+        },"case":
+        {
+          "after": true
+        }
+      ,"return":
+        {
+          "after": true
+        }
+      }
+    }],
+    "space-unary-ops": 2,
     // Best practices
     "curly": 0,
     "eqeqeq": [2, "smart"],

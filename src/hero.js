@@ -71,35 +71,24 @@ var move_hero = function(keys, frametime_coef){
         if(this.walk_speed < -this.max_walk_speed){
             this.walk_speed = -this.max_walk_speed;
         }
-    }
-
-    // Walk right:
-    else if(keys.right && !keys.left){
+    } else if(keys.right && !keys.left){
 
         // Apply a negative walk acceleration to the this's speed
         this.walk_speed += this.walk_acceleration;
 
         // Limit the this's speed
-        if(this.walk_speed > this.max_walk_speed){
+        if(this.walk_speed >this.max_walk_speed){
             this.walk_speed = this.max_walk_speed;
         }
-    }
-
-    // Idle:
-
-    else{
-
+    } else {
         if(Math.abs(this.walk_speed) < 1){
             this.walk_speed = 0;
-        }
-
-        else{
+        } else {
 
             // If the this stops walking, decelerate
             if(this.walk_speed > 0){
                 this.walk_speed += this.walk_idle_deceleration;
-            }
-            else if(this.walk_speed < 0){
+            } else if(this.walk_speed < 0){
                 this.walk_speed -= this.walk_idle_deceleration;
             }
         }
@@ -149,10 +138,7 @@ var move_hero = function(keys, frametime_coef){
                 this.y -= this.right[1];
                 break;
             }
-        }
-
-        // Detect collision on the left (L1,L2,L3)
-        else if(this.walk_speed < 0){
+        } else if(this.walk_speed < 0){
 
             // Climb a slope on the left (one solid between L4 and L3, but L1 + 3 'up', C1, R1, L2 and L3 not solid)
             if(
@@ -204,7 +190,7 @@ var move_hero = function(keys, frametime_coef){
     // Freefall:
     this.fall_speed += this.gravity;
 
-    if(this.fall_speed > this.max_fall_speed){
+    if(this.fall_speed >this.max_fall_speed){
         this.fall_speed = this.max_fall_speed;
     }
 
@@ -224,10 +210,7 @@ var move_hero = function(keys, frametime_coef){
                     break mv;
                 }
             }
-        }
-
-        // Detect collision on the top (L1,C1,R1)
-        else if(
+        } else if(
             (this.fall_speed < 0 &&
                 (
                     is_solid(this.x + this.L1[0], this.y + this.L1[1])

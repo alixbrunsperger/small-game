@@ -44,7 +44,7 @@ gulp.task('build', ['build_source', 'build_index', 'copy_images']);
 
 gulp.task('build_source', function() {
   var bundler = browserify('./src/game', {debug: !prod});
-  if (prod) {
+  if(prod){
     bundler.plugin(require('bundle-collapser/plugin'));
   }
 
@@ -86,7 +86,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('dist', ['build'], function() {
-  if (!prod) {
+  if(!prod){
     gutil.log(gutil.colors.yellow('WARNING'), gutil.colors.gray('Missing flag --prod'));
     gutil.log(gutil.colors.yellow('WARNING'), gutil.colors.gray('You should generate production assets to lower the archive size'));
   }
