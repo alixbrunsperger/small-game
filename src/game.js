@@ -5,6 +5,8 @@ var tiles = require('./tiles');
 var ctx = require('./canvas');
 var enemiesTools = require('./enemy');
 var texts = require('./texts');
+var song = require('./song');
+var player = require('./player-small');
 
 // Constants
 var prev_time = +new Date();
@@ -107,19 +109,11 @@ game = function(){
     frametime_coef = frametime / normal_frametime;
     total_frames = total_frames +1;
 
-    // Make the hero move, walk, jump, fall...
     if(!end){
         hero.move(keys, frametime_coef);
     }
 
-    // Draw the scene
     canvas.width = canvas.width;
-
-    /*
-     for map 0
-     ctx.font = '30px Arial';
-     ctx.fillText('Hello World',10,50);
-     */
 
     ctx.fillStyle = 'black';
     for(i in maps[current_map]){
@@ -227,7 +221,26 @@ game = function(){
     }
 };
 
+playSong = function(){
+    player.init(song);
+    var done = 0;
+    setInterval(function () {
+        if(done){
+            return;
+        }
+        done = player.generate() >= 1;
+
+        if(done){
+            var wave = player.createWave();
+            var audio = document.getElementById("audioElement");
+            audio.src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
+            audio.play();
+        }
+    }, 0);
+}
+
 onload = function(){
     hero.rotate(0);
+    playSong();
     game();
 }

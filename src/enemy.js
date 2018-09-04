@@ -306,11 +306,13 @@ create_enemy = function(enemy_x, enemy_y, type, width, height) {
             alternate_sprite = flying2;
             hp=1;
             gravity= 0;
+            max_walk_speed = max_walk_speed/2;
+            walk_speed = walk_speed/2;
             break;
         case 'boss':
             sprite = boss;
             alternate_sprite = boss2;
-            hp=2;
+            hp=3;
             max_walk_speed = 2;
             break;
     }
@@ -362,10 +364,10 @@ initEnemies= function(findY){
                 enemies[i] = [];
                 break;
             case 1 :
-                enemies[i] = [create_enemy(650,401,'basic')];
+                enemies[i] = [create_enemy(650,351,'basic')];
                 break;
             case 9 :
-                enemies[i] = [create_enemy(650,401,'boss', 64, 64)]
+                enemies[i] = [create_enemy(650,351,'boss')]
                 break;
             default :
                 enemies[i] = generateEnemies(i, findY);

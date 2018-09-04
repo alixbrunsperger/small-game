@@ -14,18 +14,18 @@ https://opengameart.org/content/green-robot
 flying enemy :
 https://opengameart.org/content/jetpack-robot
 
-tank : 
-https://opengameart.org/content/3x-updated-32x32-scifi-roguelike-enemies
-
 Boss : 
 https://opengameart.org/content/3x-updated-32x32-scifi-roguelike-enemies
 
 Tiles :
 https://opengameart.org/content/magic-cliffs-environment
 
-?
-https://opengameart.org/content/city-street
+Song generated with Soundbox:
+http://sb.bitsnbites.eu/
+
+Song player by Marcus Geelnard:
+http://www.bitsnbites.eu/working-on-soundbox/
+
 
 //TODO
 - bigger boss
-- random enemy + location, walk_speed
