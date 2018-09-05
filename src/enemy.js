@@ -1,48 +1,30 @@
-
-var enemy_w = 32;
-var enemy_h = 32;
-
-var uright = [1,0];
-var ubottom = [0,1];
-
-var uL1 = [-16, -16];
-var uC1 = [0, -16];
-var uR1 = [16, -16];
-var uL2 = [-16, 0];
-var uR2 = [16, 0];
-var uL3 = [-16, 8];
-var uC3 = [0, 16];
-var uR3 = [16, 8];
-var uL4 = [-16, 16];
-var uR4 = [16, 16];
-var uL5 = [-8, 16];
-var uR5 = [8, 16];
-
-base_vectors = {
-    'right': uright,
-    'bottom': ubottom
+var base_vectors = {
+    'right': [1,0],
+    'bottom': [0,1]
 }
 
-vectors = {
-    'L1': uL1,
-    'C1': uC1,
-    'R1': uR1,
-    'L2': uL2,
-    'R2': uR2,
-    'L3': uL3,
-    'C3': uC3,
-    'R3': uR3,
-    'L4': uL4,
-    'R4': uR4,
-    'L5': uL5,
-    'R5': uR5,
-};
+var vectors = {};
 
 // Functions
 var rotate_enemies = function(enemy, angle_deg){
 
     // Convert in radians
     enemy.angle = angle_deg * Math.PI / 180;
+
+    vectors = {
+        'L1': [-(enemy.width/2), -(enemy.height/2)],
+        'C1': [0, -(enemy.height/2)],
+        'R1': [(enemy.width/2), -(enemy.height/2)],
+        'L2': [-(enemy.width/2), 0],
+        'R2': [(enemy.width/2), 0],
+        'L3': [-(enemy.width/2), (enemy.height/4)],
+        'C3': [0, (enemy.height/2)],
+        'R3': [(enemy.width/2), (enemy.height/4)],
+        'L4': [-(enemy.width/2), (enemy.height/2)],
+        'R4': [(enemy.width/2), (enemy.height/2)],
+        'L5': [-(enemy.width/4), (enemy.height/2)],
+        'R5': [(enemy.width/4), (enemy.height/2)],
+    }
 
     // Rotate base vectors
     for(var i in base_vectors){
@@ -192,7 +174,7 @@ var move_enemies = function(enemy, hero, frametime_coef){
 
         // Detect collision on the bottom (L4,C3,R4)
         if(enemy.fall_speed > 0){
-            for(var j = 0; j < enemy_w; j++){
+            for(var j = 0; j < enemy.width; j++){
                 if(is_solid(enemy.x + enemy.L4[0] + j * enemy.right[0], enemy.y + enemy.L4[1] + j * enemy.right[1])){
                     enemy.fall_speed = 0;
                     enemy.x -= enemy.bottom[0];
@@ -364,10 +346,10 @@ initEnemies= function(findY){
                 enemies[i] = [];
                 break;
             case 1 :
-                enemies[i] = [create_enemy(650,351,'basic')];
+                enemies[i] = [create_enemy(650,351,'basic', 64, 64)];
                 break;
             case 9 :
-                enemies[i] = [create_enemy(650,351,'boss')]
+                enemies[i] = [create_enemy(650,351,'boss')];
                 break;
             default :
                 enemies[i] = generateEnemies(i, findY);
