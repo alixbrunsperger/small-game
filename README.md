@@ -50,3 +50,4 @@ http://www.bitsnbites.eu/working-on-soundbox/
 - have background ?
 - fix position on last screen
 - flip sprite ?
+- fix attack_enemy

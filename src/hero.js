@@ -60,7 +60,7 @@ var rotate_hero = function(angle_deg){
 var move_hero = function(keys, frametime_coef){
     // Walk left:
     if(keys.left && !keys.right){
-
+        this.isWalkingLeft = true;
         // Apply a negative walk acceleration to the hero's speed
         this.walk_speed -= this.walk_acceleration;
 
@@ -69,7 +69,7 @@ var move_hero = function(keys, frametime_coef){
             this.walk_speed = -this.max_walk_speed;
         }
     } else if(keys.right && !keys.left){
-
+        this.isWalkingLeft = false;
         // Apply a negative walk acceleration to the this's speed
         this.walk_speed += this.walk_acceleration;
 
@@ -259,6 +259,7 @@ module.exports = {
         R4: [],
         L5: [],
         R5: [],
+        isWalkingLeft: false,
         max_walk_speed: 3,
         walk_acceleration: 0.3,
         walk_idle_deceleration: -1,

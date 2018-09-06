@@ -48,6 +48,7 @@ var move_enemies = function(enemy, hero, frametime_coef){
 
     // Walk left:
     if(enemy.x > hero.x){
+        enemy.isWalkingLeft = true;
         // Apply a negative walk acceleration to the enemy's speed
         enemy.walk_speed -= enemy.walk_acceleration;
 
@@ -56,6 +57,7 @@ var move_enemies = function(enemy, hero, frametime_coef){
             enemy.walk_speed = -enemy.max_walk_speed;
         }
     } else if(enemy.x < hero.x){
+        enemy.isWalkingLeft = false;
         // Apply a negative walk acceleration to the enemy's speed
         enemy.walk_speed += enemy.walk_acceleration;
 
@@ -322,6 +324,7 @@ create_enemy = function(enemy_x, enemy_y, type, width, height) {
         R4: [],
         L5: [],
         R5: [],
+        isWalkingLeft: false,
         max_walk_speed: max_walk_speed,
         walk_acceleration: walk_speed,
         walk_idle_deceleration: -1,

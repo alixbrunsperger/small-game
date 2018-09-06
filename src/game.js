@@ -139,15 +139,17 @@ game = function(){
     if(hero.isTouched()){
         ctx.globalAlpha = 0.4;
     }
-    //if walk left  ctx.scale(-1, 1);
+    if(hero.isWalkingLeft){
+        ctx.scale(-1, 1);
+    }
     ctx.drawImage(hero_sprite, -16, -16, tile_w, tile_h);
-    ctx.restore();
+    //ctx.restore();
 
     keys.attack ?
         ctx.drawImage(keyboard_sprite2 , 5, 0, 16, 16)
         :
         ctx.drawImage(keyboard_sprite, 5, -6, 16, 16);
-
+    ctx.restore();
     //ctx.save();
     enemies[current_map].forEach(function(mob) {
         enemiesTools.rotate_enemies(mob, 0);
@@ -157,6 +159,9 @@ game = function(){
         if(enemiesTools.isMonsterTouched(mob)){
             ctx.globalAlpha = 0.4;
         }
+        /*if(mob.isWalkingLeft){
+            ctx.scale(-1, 1);
+        }*/
         ctx.drawImage(mob.current_sprite, mob.x-(mob.width/2), mob.y-(mob.height/2), mob.width, mob.height);
         ctx.fillStyle = 'red';
         ctx.fillRect(mob.x -20, mob.y-(mob.height/2)-5, 40, 5);
