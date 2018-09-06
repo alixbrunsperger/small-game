@@ -2,30 +2,46 @@
 
 Credits
 
-Engine :
-https://github.com/xem/platform-engine
+**Engine :**
 
-Hero :
+https://github.com/xem/platform-engine
+https://github.com/ooflorent/js13k-boilerplate
+
+
+**Hero design:**
+
 https://opengameart.org/content/classic-hero-and-baddies-pack
 
-enemy basic :
+Author grafxkid: https://opengameart.org/users/grafxkid
+
+**Enemy basic :**
+
 https://opengameart.org/content/green-robot
 
-flying enemy :
+Author grafxkid: https://opengameart.org/users/grafxkid
+
+**Flying enemy :**
+
 https://opengameart.org/content/jetpack-robot
 
-Boss : 
+Author bluerobin2: https://opengameart.org/users/bluerobin2
+
+**Boss :**
+
 https://opengameart.org/content/3x-updated-32x32-scifi-roguelike-enemies
 
-Tiles :
+Author :  Stephen "Redshrike" Challener, https://opengameart.org/users/redshrike
+
+**Tiles :**
+
 https://opengameart.org/content/magic-cliffs-environment
 
-Song generated with Soundbox:
+Author  Ansimuz.com: https://opengameart.org/users/ansimuz
+
+**Song generated with Soundbox:**
+
 http://sb.bitsnbites.eu/
 
-Song player by Marcus Geelnard:
+**Song player by Marcus Geelnard:**
+
 http://www.bitsnbites.eu/working-on-soundbox/
-
-
-//TODO
-- bigger boss

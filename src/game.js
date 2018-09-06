@@ -21,6 +21,7 @@ var invertUp = 1;
 var invertRight = 1;
 var end = false;
 var current_map = 0;
+var play =  false;
 
 var tile_w = 32;
 var tile_h = 32;
@@ -53,7 +54,7 @@ findY = function(x, map, height){
     while(!is_solid(x,y, map)) {
         y = y +1;
     }
-    return y-(height+ tile_w)-20;
+    return y-(height+ tile_w)-15;
 };
 
 var enemies= enemiesTools.initEnemies(findY);
@@ -109,7 +110,7 @@ game = function(){
     frametime_coef = frametime / normal_frametime;
     total_frames = total_frames +1;
 
-    if(!end){
+    if(!end && play){
         hero.move(keys, frametime_coef);
     }
 
@@ -155,11 +156,11 @@ game = function(){
         if(enemiesTools.isMonsterTouched(mob)){
             ctx.globalAlpha = 0.4;
         }
-        ctx.drawImage(mob.current_sprite, mob.x-16, mob.y-16, mob.width, mob.height);
+        ctx.drawImage(mob.current_sprite, mob.x-(mob.width/2), mob.y-(mob.height/2), mob.width, mob.height);
         ctx.fillStyle = 'red';
-        ctx.fillRect(mob.x -20, mob.y -25, 40, 5);
+        ctx.fillRect(mob.x -20, mob.y-(mob.height/2)-5, 40, 5);
         ctx.fillStyle = 'green';
-        ctx.fillRect(mob.x -20, mob.y -25 , (mob.current_hp*40)/mob.hp,5);
+        ctx.fillRect(mob.x -20, mob.y-(mob.height/2)-5 , (mob.current_hp*40)/mob.hp,5);
         //ctx.restore();
 
         if(!hero.isTouched() && enemiesTools.collision_enemy(mob, hero)){
@@ -237,10 +238,15 @@ playSong = function(){
             audio.play();
         }
     }, 0);
+};
+
+switchPlay = function(){
+    play=true;
 }
 
 onload = function(){
     hero.rotate(0);
     playSong();
+    setTimeout(switchPlay,1000);
     game();
 }

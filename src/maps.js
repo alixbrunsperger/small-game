@@ -97,7 +97,7 @@ initMaps= function(){
                 maps[i] = flatMap;
                 break;
             case 1 :
-                maps[1] = flatMap
+                maps[1] = flatMap.slice();
                 maps[1][12] = '0000011111000000000000000';
                 break;
             default :
