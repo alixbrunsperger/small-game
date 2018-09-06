@@ -48,12 +48,12 @@ is_solid = function(x,y, mapNumber){
     }
 };
 
-findY = function(x, map){
+findY = function(x, map, height){
     var y = 0;
     while(!is_solid(x,y, map)) {
         y = y +1;
     }
-    return y-20;
+    return y-(height+ tile_w)-20;
 };
 
 var enemies= enemiesTools.initEnemies(findY);

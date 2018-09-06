@@ -1,6 +1,3 @@
-var hero_w = 22;
-var hero_h = 28;
-
 var uright = [1,0];
 var ubottom = [0,1];
 
@@ -201,7 +198,7 @@ var move_hero = function(keys, frametime_coef){
 
         // Detect collision on the bottom (L4,C3,R4)
         if(this.fall_speed > 0){
-            for(var j = 0; j < hero_w; j++){
+            for(var j = 0; j < this.width; j++){
                 if(is_solid(this.x + this.L4[0] + j * this.right[0], this.y + this.L4[1] + j * this.right[1])){
                     this.fall_speed = 0;
                     this.x -= this.bottom[0];
@@ -248,6 +245,8 @@ module.exports = {
         angle: 0,
         right: [],
         bottom: [],
+        width: 22,
+        height: 28,
         L1: [],
         C1: [],
         R1: [],

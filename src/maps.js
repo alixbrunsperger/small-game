@@ -6,62 +6,62 @@ change_step = function(isForward, current_map, hero, keys, frametime_coef, maps)
             nextMap = current_map + 1;
             //check
             hero.x = 73;
-            hero.y = findY(hero.x, nextMap);
+            hero.y = findY(hero.x, nextMap, hero.height);
             hero.move(keys, frametime_coef);
         }
         break;
       case 1 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 2 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 3 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 4 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 5 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 6 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 7 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 8 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 9 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap);
+          hero.y = findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 10 :

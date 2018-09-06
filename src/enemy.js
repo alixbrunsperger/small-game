@@ -346,10 +346,10 @@ initEnemies= function(findY){
                 enemies[i] = [];
                 break;
             case 1 :
-                enemies[i] = [create_enemy(650,351,'basic', 64, 64)];
+                enemies[i] = [create_enemy(650,321,'basic')];
                 break;
             case 9 :
-                enemies[i] = [create_enemy(650,351,'boss')];
+                enemies[i] = [create_enemy(650,321,'boss', 64, 64)];
                 break;
             default :
                 enemies[i] = generateEnemies(i, findY);
@@ -366,14 +366,16 @@ generateEnemies = function(mapNumber, findY){
     var x = 0;
     var y = 0;
     var enemies =[];
+    var width = 32;
+    var height = 32;
 
     for(var i = 0 ; i<number; i++){
          enemy_type = Math.floor(Math.random() * 2) ? 'basic' : 'flying';
          x = Math.floor((Math.random() * 301)+350);
-         y = findY(x, mapNumber);
+         y = findY(x, mapNumber, height);
          y = enemy_type === 'flying' ? y - Math.floor((Math.random() * 101)) : y;
 
-        enemies.push(create_enemy(x,y,enemy_type));
+        enemies.push(create_enemy(x,y,enemy_type,width,height));
     }
 
     return enemies;
