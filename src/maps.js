@@ -61,7 +61,7 @@ change_step = function(isForward, current_map, hero, keys, frametime_coef, maps)
       case 9 :
           nextMap = isForward ? current_map + 1 : current_map - 1;
           hero.x = isForward ? 73 : 680;
-          hero.y = findY(hero.x, nextMap, hero.height);
+          hero.y = isForward ? 401 : findY(hero.x, nextMap, hero.height);
           hero.move(keys, frametime_coef);
           break;
       case 10 :
