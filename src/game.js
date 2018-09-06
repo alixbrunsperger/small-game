@@ -139,6 +139,7 @@ game = function(){
     if(hero.isTouched()){
         ctx.globalAlpha = 0.4;
     }
+    //if walk left  ctx.scale(-1, 1);
     ctx.drawImage(hero_sprite, -16, -16, tile_w, tile_h);
     ctx.restore();
 
