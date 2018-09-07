@@ -119,9 +119,7 @@ game = function(){
     ctx.fillStyle = 'black';
     for(i in maps[current_map]){
         for(j in maps[current_map][i]){
-            if(maps[current_map][i][j] !== '0'){
-                ctx.drawImage(tiles[maps[current_map][i][j]].sprite, j * tile_w, i * tile_h, tile_w, tile_h);
-            }
+            ctx.drawImage(tiles[maps[current_map][i][j]].sprite, j * tile_w, i * tile_h, tile_w, tile_h);
         }
     }
 
@@ -239,8 +237,8 @@ playSong = function(){
 
         if(done){
             var wave = player.createWave();
-            var audio = document.getElementById("audioElement");
-            audio.src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
+            var audio = document.getElementById('audioElement');
+            audio.src = URL.createObjectURL(new Blob([wave], {type: 'audio/wav'}));
             audio.play();
         }
     }, 0);

@@ -225,10 +225,10 @@ collision_enemy = function(mob, hero){
 
 attack_enemy = function(mob, hero){
     var weapon_points = {
-        r1:{ x: hero.x + 5, y: hero.y - 6},
-        r4:{ x: hero.x + 5 + 20, y: hero.y -6},
-        l1:{ x: hero.x + 5 + 20, y: hero.y + 16},
-        l4:{ x: hero.x + 5, y: hero.y + 16}
+        r1:{ x: hero.x + 5 + (hero.isWalkingLeft ? -32 : 0), y: hero.y - 6},
+        r4:{ x: hero.x + 5 + 20 + (hero.isWalkingLeft ? -32 : 0), y: hero.y -6},
+        l1:{ x: hero.x + 5 + 20 + (hero.isWalkingLeft ? -32 : 0), y: hero.y + 16},
+        l4:{ x: hero.x + 5+ (hero.isWalkingLeft ? -32 : 0), y: hero.y + 16}
     };
     var mob_points = {
         r1:{ x: mob.x + mob.R1[0], y: mob.y + mob.R1[1]},
@@ -295,7 +295,7 @@ create_enemy = function(enemy_x, enemy_y, type, width, height) {
             break;
         case 'boss':
             sprite = boss;
-            alternate_sprite = boss2;
+            alternate_sprite = boss;
             hp=3;
             max_walk_speed = 2;
             break;

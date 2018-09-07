@@ -38,6 +38,12 @@ https://opengameart.org/content/magic-cliffs-environment
 
 Author  Ansimuz.com: https://opengameart.org/users/ansimuz
 
+**Background :**
+
+https://opengameart.org/content/dirt-platformer-tiles
+
+Author Lanea Zimmerman: https://opengameart.org/users/sharm
+
 **Song generated with Soundbox:**
 
 http://sb.bitsnbites.eu/
@@ -47,7 +53,4 @@ http://sb.bitsnbites.eu/
 http://www.bitsnbites.eu/working-on-soundbox/
 
 // TODO
-- have background ?
-- fix position on last screen
-- flip sprite ?
-- fix attack_enemy
+- flip sprite enemy?

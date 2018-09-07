@@ -86,7 +86,7 @@ initMaps= function(){
         '0000000000000000000000000',
         '0000000000000000000000000',
         '0000000000000000000000000',
-        '1111111111111111111111111',
+        '2222222222222222222222222',
     ];
 
     for(var i = 0; i < 11 ; i++){
@@ -98,7 +98,7 @@ initMaps= function(){
                 break;
             case 1 :
                 maps[1] = flatMap.slice();
-                maps[1][12] = '0000011111000000000000000';
+                maps[1][12] = '0000022222000000000000000';
                 break;
             default :
                 maps[i] = generateLevel();
@@ -110,22 +110,19 @@ initMaps= function(){
 };
 
 generateLevel =  function(){
-    var map = [];
     var height = Math.floor((Math.random() * 3));
-    var hasCellar = height === 3;
     var nextBreak = Math.floor((Math.random() * 3)+1);
-    var emptyLine = '0000000000000000000000000';
-    var cellarLine = '0000444444444444444440000';
-    var emptyTile = 0;
-    var tile = Math.floor((Math.random() * 3)+1)
+    var backgroundTile = Math.floor((Math.random() * 2));
+    var emptyLine = backgroundTile.toString().repeat(25);
+    var floorTile = 2;
 
-    map = [
-        (hasCellar ? cellarLine : emptyLine),
+    var map = [
+        emptyLine,
         emptyLine,
         emptyLine,
         emptyLine,
         '','','','','','','','','',
-        emptyLine.replace(/0/g, tile)
+        emptyLine.replace(new RegExp(backgroundTile,'g'), floorTile)
     ];
 
     for(var i = 0; i<25;i++){
@@ -135,7 +132,7 @@ generateLevel =  function(){
         }
 
         for(var j= 4;j<13;j++){
-            map[j] = map[j] + (j < parseInt(13-height, 10) ? emptyTile : tile);
+            map[j] = map[j] + (j < parseInt(13-height, 10) ? backgroundTile : floorTile);
         }
     }
 
