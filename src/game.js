@@ -238,6 +238,7 @@ playSong = function(){
         if(done){
             var wave = player.createWave();
             var audio = document.getElementById('audioElement');
+            audio.loop = true;
             audio.src = URL.createObjectURL(new Blob([wave], {type: 'audio/wav'}));
             audio.play();
         }
